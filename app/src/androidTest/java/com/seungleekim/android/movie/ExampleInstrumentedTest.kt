@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie_world
+package com.seungleekim.android.movie
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

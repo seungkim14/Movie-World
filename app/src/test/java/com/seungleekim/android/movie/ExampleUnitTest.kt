@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie_world
+package com.seungleekim.android.movie
 
 import org.junit.Test
 

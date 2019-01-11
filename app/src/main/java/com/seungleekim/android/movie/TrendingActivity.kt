@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie_world
+package com.seungleekim.android.movie
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

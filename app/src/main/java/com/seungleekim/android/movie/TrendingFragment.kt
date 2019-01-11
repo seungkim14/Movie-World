@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie_world
+package com.seungleekim.android.movie
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
