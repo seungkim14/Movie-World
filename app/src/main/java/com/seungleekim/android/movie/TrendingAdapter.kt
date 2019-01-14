@@ -23,13 +23,14 @@ class TrendingAdapter : ListAdapter<Movie, TrendingAdapter.TrendingViewHolder>(T
 
     inner class TrendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(movie: Movie, position: Int) = with(itemView) {
-            Glide.with(context).load(movie.posterPath).into(iv_trending_movie_poster)
+            GlideApp.with(context).load(movie.getPosterUrl()).into(iv_trending_movie_poster)
             tv_trending_movie_title.text = movie.title
             tv_trending_movie_rank.text = (position + 1).toString()
             tv_trending_movie_rating.text = movie.rating.toString()
 
             setOnClickListener {
                 Toast.makeText(context, "${movie.title} clicked!", Toast.LENGTH_SHORT).show()
+                // TODO: open MovieDetail screen
             }
         }
     }
