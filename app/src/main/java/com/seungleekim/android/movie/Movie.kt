@@ -11,5 +11,12 @@ data class Movie(
     @SerializedName("poster_path")
     val posterPath: String,
     @SerializedName("vote_average")
-    val rating: Double
-) : Parcelable
+    val rating: Double,
+    @SerializedName("release_date")
+    val releaseDate: String
+) : Parcelable {
+
+    fun getPosterUrl(): String {
+        return return "http://image.tmdb.org/t/p/w342$posterPath"
+    }
+}
