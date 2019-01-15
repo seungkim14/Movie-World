@@ -3,7 +3,7 @@ package com.seungleekim.android.movie.network
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ApiKeyInterceptor : Interceptor {
+class TmdbApiKeyInterceptor : Interceptor {
 
     private val API_KEY = "9d09208e1c09792a5dae8a6c6a749a28"
 

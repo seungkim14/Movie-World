@@ -18,7 +18,7 @@ class TrendingMoviesActivity : AppCompatActivity() {
                 .beginTransaction()
                 .add(
                     R.id.fragment_container,
-                    TrendingMoviesFragment()
+                    TrendingMoviesFragment.newInstance()
                 )
                 .commit()
         }
