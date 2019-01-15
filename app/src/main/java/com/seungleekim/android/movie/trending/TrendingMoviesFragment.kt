@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie
+package com.seungleekim.android.movie.trending
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.seungleekim.android.movie.R
+import com.seungleekim.android.movie.model.Movie
+import com.seungleekim.android.movie.network.ApiKeyInterceptor
+import com.seungleekim.android.movie.network.TmdbApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_trending.*
@@ -16,7 +20,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class TrendingFragment : Fragment() {
+class TrendingMoviesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trending, container, false)
@@ -28,7 +32,7 @@ class TrendingFragment : Fragment() {
     private fun initRecyclerView(view: View) {
         view.rv_trending_movies.setHasFixedSize(true)
         view.rv_trending_movies.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        view.rv_trending_movies.adapter = TrendingAdapter()
+        view.rv_trending_movies.adapter = TrendingMoviesAdapter()
     }
 
     private fun loadTrendingMovies() {
@@ -59,7 +63,7 @@ class TrendingFragment : Fragment() {
     }
 
     private fun onFetchMovieSuccess(movies: List<Movie>) {
-        (rv_trending_movies.adapter as TrendingAdapter).submitList(movies)
+        (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(movies)
     }
 
     private fun onFetchMovieFailure(e: Throwable?) {

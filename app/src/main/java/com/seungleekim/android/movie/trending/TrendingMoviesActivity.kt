@@ -1,9 +1,10 @@
-package com.seungleekim.android.movie
+package com.seungleekim.android.movie.trending
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.seungleekim.android.movie.R
 
-class TrendingActivity : AppCompatActivity() {
+class TrendingMoviesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,7 +16,10 @@ class TrendingActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_container, TrendingFragment())
+                .add(
+                    R.id.fragment_container,
+                    TrendingMoviesFragment()
+                )
                 .commit()
         }
     }

@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie
+package com.seungleekim.android.movie.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

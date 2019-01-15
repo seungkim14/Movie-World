@@ -1,23 +1,26 @@
-package com.seungleekim.android.movie
+package com.seungleekim.android.movie.trending
 
 import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.bumptech.glide.Glide
+import com.seungleekim.android.movie.GlideApp
+import com.seungleekim.android.movie.R
+import com.seungleekim.android.movie.model.Movie
 import kotlinx.android.synthetic.main.vh_trending_movie.view.*
 
-class TrendingAdapter : ListAdapter<Movie, TrendingAdapter.TrendingViewHolder>(TrendingDiffCallback()) {
+class TrendingMoviesAdapter : ListAdapter<Movie, TrendingMoviesAdapter.TrendingViewHolder>(
+    TrendingMoviesDiffCallback()
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.vh_trending_movie, parent, false)
         return TrendingViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: TrendingAdapter.TrendingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TrendingViewHolder, position: Int) {
         holder.bind(getItem(position), position)
     }
 
@@ -35,14 +38,3 @@ class TrendingAdapter : ListAdapter<Movie, TrendingAdapter.TrendingViewHolder>(T
         }
     }
 }
-
-class TrendingDiffCallback : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(m0: Movie, m1: Movie): Boolean {
-        return false
-    }
-
-    override fun areContentsTheSame(m0: Movie, m1: Movie): Boolean {
-        return false
-    }
-}
-

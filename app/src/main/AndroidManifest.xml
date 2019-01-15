@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.MovieWorld"
             android:usesCleartextTraffic="true">
-        <activity android:name=".TrendingActivity">
+        <activity android:name=".trending.TrendingMoviesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
