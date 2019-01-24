@@ -10,5 +10,5 @@ abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [TrendingMoviesModule::class])
-    abstract fun trendingMoviesActivity(): TrendingMoviesActivity
+    internal abstract fun trendingMoviesActivity(): TrendingMoviesActivity
 }

@@ -49,4 +49,3 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
         fun newInstance() = TrendingMoviesFragment()
     }
 }
-

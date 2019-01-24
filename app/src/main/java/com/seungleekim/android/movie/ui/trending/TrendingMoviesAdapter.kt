@@ -12,7 +12,7 @@ import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.model.Movie
 import kotlinx.android.synthetic.main.vh_trending_movie.view.*
 
-class TrendingMoviesAdapter: ListAdapter<Movie, TrendingMoviesAdapter.TrendingMoviesViewHolder>(
+class TrendingMoviesAdapter : ListAdapter<Movie, TrendingMoviesAdapter.TrendingMoviesViewHolder>(
     TrendingMoviesDiffCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingMoviesViewHolder {
@@ -24,7 +24,7 @@ class TrendingMoviesAdapter: ListAdapter<Movie, TrendingMoviesAdapter.TrendingMo
         holder.bind(getItem(position), position)
     }
 
-    inner class TrendingMoviesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class TrendingMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(movie: Movie, position: Int) = with(itemView) {
             GlideApp.with(context).load(movie.getPosterUrl()).into(iv_trending_movie_poster)
             tv_trending_movie_title.text = movie.title
@@ -38,7 +38,7 @@ class TrendingMoviesAdapter: ListAdapter<Movie, TrendingMoviesAdapter.TrendingMo
         }
     }
 
-    class TrendingMoviesDiffCallback: DiffUtil.ItemCallback<Movie>() {
+    class TrendingMoviesDiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldMovie: Movie, newMovie: Movie): Boolean {
             return oldMovie.id == newMovie.id
         }

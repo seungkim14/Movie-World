@@ -22,8 +22,8 @@ class TrendingMoviesPresenter @Inject constructor() :
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {response -> onGetMoviesSuccess(response)},
-                {e -> onGetMoviesFailure(e)}
+                { response -> onGetMoviesSuccess(response) },
+                { e -> onGetMoviesFailure(e) }
             )
     }
 
@@ -43,5 +43,4 @@ class TrendingMoviesPresenter @Inject constructor() :
     override fun dropView() {
         mView = null
     }
-
 }

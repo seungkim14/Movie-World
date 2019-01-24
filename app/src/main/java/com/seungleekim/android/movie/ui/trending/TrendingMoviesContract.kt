@@ -5,11 +5,11 @@ import com.seungleekim.android.movie.ui.BaseContract
 
 interface TrendingMoviesContract {
 
-    interface View: BaseContract.View<Presenter> {
+    interface View : BaseContract.View<Presenter> {
         fun showTrendingMovies(movies: List<Movie>?)
     }
 
-    interface Presenter: BaseContract.Presenter<View> {
+    interface Presenter : BaseContract.Presenter<View> {
         fun getTrendingMovies()
     }
 }
