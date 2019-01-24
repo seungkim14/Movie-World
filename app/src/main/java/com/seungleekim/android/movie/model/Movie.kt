@@ -17,6 +17,6 @@ data class Movie(
 ) : Parcelable {
 
     fun getPosterUrl(): String {
-        return return "http://image.tmdb.org/t/p/w342$posterPath"
+        return "http://image.tmdb.org/t/p/w342$posterPath"
     }
 }

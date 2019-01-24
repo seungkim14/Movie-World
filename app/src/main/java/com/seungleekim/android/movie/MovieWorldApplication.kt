@@ -1,19 +1,12 @@
 package com.seungleekim.android.movie
 
-import android.app.Application
+import com.seungleekim.android.movie.di.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
-class MovieWorldApplication : Application() {
+class MovieWorldApplication : DaggerApplication() {
 
-    lateinit var mAppComponent: AppComponent
-
-    override fun onCreate() {
-        super.onCreate()
-        initAppComponent()
-    }
-
-    private fun initAppComponent() {
-        mAppComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(this))
-            .build()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder().application(this).build()
     }
 }

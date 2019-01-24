@@ -1,31 +1,38 @@
-package com.seungleekim.android.movie.trending
+package com.seungleekim.android.movie.ui.trending
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.seungleekim.android.movie.R
+import com.seungleekim.android.movie.di.ActivityScoped
 import com.seungleekim.android.movie.model.Movie
-import com.seungleekim.android.movie.network.TmdbApi
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_trending.*
 import kotlinx.android.synthetic.main.fragment_trending.view.*
+import javax.inject.Inject
 
-class TrendingMoviesFragment : Fragment() {
+@ActivityScoped
+class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingMoviesContract.View {
 
-    companion object {
-        fun newInstance() = TrendingMoviesFragment()
-    }
+    @Inject
+    lateinit var mPresenter: TrendingMoviesContract.Presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trending, container, false)
         initRecyclerView(view)
-//        loadTrendingMovies()
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter.takeView(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.dropView()
     }
 
     private fun initRecyclerView(view: View) {
@@ -34,23 +41,12 @@ class TrendingMoviesFragment : Fragment() {
         view.rv_trending_movies.adapter = TrendingMoviesAdapter()
     }
 
-    private fun loadTrendingMovies(tmdbApi: TmdbApi) {
-        tmdbApi.getTrendingMovies()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {response -> onFetchMovieSuccess(response.trendingMovies)},
-                {e -> onFetchMovieFailure(e)}
-            )
-
-    }
-
-    private fun onFetchMovieSuccess(movies: List<Movie>) {
+    override fun showTrendingMovies(movies: List<Movie>?) {
         (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(movies)
     }
 
-    private fun onFetchMovieFailure(e: Throwable?) {
-        Log.e(e?.message, e?.stackTrace.toString())
+    companion object {
+        fun newInstance() = TrendingMoviesFragment()
     }
 }
 
