@@ -2,6 +2,9 @@
 *.iml
 .idea/
 
+# ktlint
+ktlint
+
 # Built application files
 *.apk
 *.ap_
