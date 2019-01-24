@@ -1,13 +1,18 @@
 package com.seungleekim.android.movie.di
 
-import android.app.Application
 import android.content.Context
-import dagger.Binds
+import com.seungleekim.android.movie.MovieWorldApplication
 import dagger.Module
+import dagger.Provides
 
 @Module
-abstract class AppModule {
+class AppModule {
 
-    @Binds
-    abstract fun bindContext(application: Application): Context
+    @Provides
+    fun provideContext(application: MovieWorldApplication): Context {
+        return application.applicationContext
+    }
+
+
+
 }

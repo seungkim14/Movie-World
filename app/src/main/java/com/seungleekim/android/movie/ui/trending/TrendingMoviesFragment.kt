@@ -1,6 +1,7 @@
 package com.seungleekim.android.movie.ui.trending
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,10 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
 
     override fun showTrendingMovies(movies: List<Movie>?) {
         (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(movies)
+    }
+
+    override fun showFailureMessage(errorMessage: String) {
+        Snackbar.make(trending_container, errorMessage, Snackbar.LENGTH_INDEFINITE).show()
     }
 
     companion object {
