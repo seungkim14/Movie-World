@@ -1,64 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.card.MaterialCardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:cardElevation="2dp"
-        app:cardPreventCornerOverlap="true">
-    
-    <android.support.constraint.ConstraintLayout 
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mcv_poster_container"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/poster_height_movies_list"
+    app:cardElevation="2dp"
+    app:cardPreventCornerOverlap="true">
         
-        <ImageView
-            android:id="@+id/iv_trending_movie_poster"
-            android:layout_width="240dp"
-            android:layout_height="360dp"
-            android:background="@android:color/black"
-            android:contentDescription="@string/movie_poster"/>
-
-        <TextView
-            android:id="@+id/tv_trending_movie_rank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            tools:text="#1"
-            app:layout_constraintTop_toBottomOf="@id/iv_trending_movie_poster"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_trending_movie_title"/>
-
-        <TextView
-            android:id="@+id/tv_trending_movie_title"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="25sp"
-            tools:text="Black Panther"
-            app:layout_constraintTop_toBottomOf="@id/iv_trending_movie_poster"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_trending_movie_rank"
-            app:layout_constraintEnd_toStartOf="@id/tv_trending_movie_rating"/>
-
-        <TextView
-            android:id="@+id/tv_trending_movie_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            tools:text="7.8"
-            app:layout_constraintTop_toBottomOf="@id/iv_trending_movie_poster"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_trending_movie_title"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    </android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/iv_trending_movie_poster"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/movie_poster" />
 
 </android.support.design.card.MaterialCardView>
