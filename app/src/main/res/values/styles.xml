@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
     </style>
 
     <style name="Widget.Movie.Toolbar" parent="Widget.AppCompat.Toolbar">
@@ -12,4 +14,30 @@
         <item name="android:theme">@style/Theme.Movie</item>
     </style>
 
+    <style name="TextAppearance.Movie.Toolbar" parent="Theme.Movie">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Widget.Movie.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.Movie.BottomNavigationView.Active</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.Movie.BottomNavigationView.Inactive</item>
+    </style>
+
+    <style name="TextAppearance.Movie.BottomNavigationView.Active" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.Movie.BottomNavigationView.Inactive" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 </resources>

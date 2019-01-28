@@ -12,7 +12,4 @@ class AppModule {
     fun provideContext(application: MovieWorldApplication): Context {
         return application.applicationContext
     }
-
-
-
 }
