@@ -7,7 +7,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.seungleekim.android.movie_world"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -54,6 +54,10 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+    // Calligraphy
+    implementation "io.github.inflationx:calligraphy3:$calligraphyVersion"
+    implementation "io.github.inflationx:viewpump:$viewPumpVersion"
 
     // Testing Library
     testImplementation 'junit:junit:4.12'

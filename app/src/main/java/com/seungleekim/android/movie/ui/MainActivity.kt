@@ -1,5 +1,6 @@
 package com.seungleekim.android.movie.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.seungleekim.android.movie.R
@@ -7,6 +8,7 @@ import com.seungleekim.android.movie.ui.favorites.FavoriteMoviesFragment
 import com.seungleekim.android.movie.ui.search.SearchMoviesFragment
 import com.seungleekim.android.movie.ui.trending.TrendingMoviesFragment
 import dagger.android.support.DaggerAppCompatActivity
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -18,6 +20,10 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_main)
         initFragmentByTag(TAG_TRENDING_FRAGMENT)
         initBottomNavigationView()
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase!!))
     }
 
     private fun initFragmentByTag(tag: String) {

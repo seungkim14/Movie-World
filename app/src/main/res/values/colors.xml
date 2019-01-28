@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- color for the app bar and other primary UI elements -->
-    <color name="colorPrimary">#37474F</color>
+    <color name="colorPrimary">#000000</color>
     <!-- darker variant of the primary color, used for the status bar
     and contextual app bars -->
-    <color name="colorPrimaryDark">#263238</color>
+    <color name="colorPrimaryDark">#000000</color>
     <!-- secondary color for controls (e.g. checkboxes and text fields -->
     <color name="colorAccent">#FFFFFF</color>
     <!-- color for the texts -->
     <color name="textColorPrimary">@color/colorAccent</color>
     <!-- color for the app bar icons -->
     <color name="toolbarIconColor">@color/colorAccent</color>
+    <!-- color for active bottom navigation tab -->
+    <color name="bottomNavigationTabActive">#FFFFFF</color>
+    <!-- color for inactive bottom navigation tab -->
+    <color name="bottomNavigationTabInactive">#424242</color>
 </resources>

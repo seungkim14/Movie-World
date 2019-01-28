@@ -49,7 +49,7 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
     }
 
     override fun showFailureMessage(errorMessage: String) {
-        Snackbar.make(trending_container, errorMessage, Snackbar.LENGTH_INDEFINITE).show()
+        Snackbar.make(rv_trending_movies, errorMessage, Snackbar.LENGTH_INDEFINITE).show()
     }
 
     companion object {
