@@ -1,10 +1,10 @@
 package com.seungleekim.android.movie.ui.search
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.seungleekim.android.movie.R
 
 class SearchMoviesFragment : Fragment() {

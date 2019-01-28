@@ -2,7 +2,7 @@ package com.seungleekim.android.movie.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.ui.favorites.FavoriteMoviesFragment
 import com.seungleekim.android.movie.ui.search.SearchMoviesFragment
