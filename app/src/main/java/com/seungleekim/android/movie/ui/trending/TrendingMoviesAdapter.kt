@@ -1,18 +1,19 @@
 package com.seungleekim.android.movie.ui.trending
 
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.seungleekim.android.movie.GlideApp
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.model.Movie
 import kotlinx.android.synthetic.main.vh_trending_movie.view.*
 
-class TrendingMoviesAdapter : ListAdapter<Movie, TrendingMoviesAdapter.TrendingMoviesViewHolder>(
+class TrendingMoviesAdapter(
+    val onClickListener: OnClickListener
+) : ListAdapter<Movie, TrendingMoviesAdapter.TrendingMoviesViewHolder>(
     TrendingMoviesDiffCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingMoviesViewHolder {
@@ -28,8 +29,7 @@ class TrendingMoviesAdapter : ListAdapter<Movie, TrendingMoviesAdapter.TrendingM
         fun bind(movie: Movie, position: Int) = with(itemView) {
             GlideApp.with(context).load(movie.getPosterUrl()).into(iv_trending_movie_poster)
             setOnClickListener {
-                Toast.makeText(context, "${movie.title} clicked!", Toast.LENGTH_SHORT).show()
-                // TODO: open MovieDetail screen
+                onClickListener.onMovieClicked(movie)
             }
         }
     }
@@ -43,5 +43,9 @@ class TrendingMoviesAdapter : ListAdapter<Movie, TrendingMoviesAdapter.TrendingM
             return oldMovie.title == newMovie.title
                     && oldMovie.releaseDate == newMovie.releaseDate
         }
+    }
+
+    interface OnClickListener {
+        fun onMovieClicked(movie: Movie)
     }
 }

@@ -2,6 +2,10 @@
 
 buildscript {
     ext {
+        compileSdkVersion = 28
+        minSdkVersion = 19
+        targetSdkVersion = 28
+
         appCompatVersion = '1.1.0-alpha01'
         calligraphyVersion = '3.0.0'
         constraintLayoutVersion = '1.1.3'

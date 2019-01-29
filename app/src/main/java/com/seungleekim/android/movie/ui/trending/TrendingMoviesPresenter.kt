@@ -29,11 +29,11 @@ class TrendingMoviesPresenter @Inject constructor(
             )
     }
 
-    private fun onGetMoviesSuccess(response: MoviesResponse?) {
+    override fun onGetMoviesSuccess(response: MoviesResponse?) {
         mView?.showTrendingMovies(response?.trendingMovies)
     }
 
-    private fun onGetMoviesFailure(e: Throwable?) {
+    override fun onGetMoviesFailure(e: Throwable?) {
         Log.e(e?.message, e?.stackTrace.toString())
         var message = "Cannot load trending movies"
         if (!networkUtils.hasNetworkConnection()) {
