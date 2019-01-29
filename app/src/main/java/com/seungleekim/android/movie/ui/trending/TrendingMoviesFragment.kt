@@ -10,6 +10,7 @@ import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.di.ActivityScoped
 import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.ui.details.MovieDetailsActivity
+import com.seungleekim.android.movie.util.NetworkUtils
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_trending.*
 import javax.inject.Inject
@@ -17,6 +18,9 @@ import javax.inject.Inject
 @ActivityScoped
 class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingMoviesContract.View,
     TrendingMoviesAdapter.OnClickListener {
+
+    @Inject
+    lateinit var networkUtils: NetworkUtils
 
     @Inject
     lateinit var mPresenter: TrendingMoviesContract.Presenter
@@ -33,6 +37,7 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
     override fun onResume() {
         super.onResume()
         mPresenter.takeView(this)
+        mPresenter.loadTrendingMovies()
     }
 
     override fun onDestroy() {
@@ -50,7 +55,11 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
         (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(movies)
     }
 
-    override fun showFailureMessage(errorMessage: String) {
+    override fun showFailureMessage() {
+        val errorMessage = when (networkUtils.hasNetworkConnection()) {
+            true -> getString(R.string.cannot_load_trending_movies_check_network_connection)
+            false -> getString(R.string.cannot_load_trending_movies)
+        }
         Snackbar.make(rv_trending_movies, errorMessage, Snackbar.LENGTH_INDEFINITE).show()
     }
 

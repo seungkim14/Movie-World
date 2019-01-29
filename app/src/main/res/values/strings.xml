@@ -6,4 +6,8 @@
     <string name="search">Search</string>
     <string name="favorites">Favorites</string>
     <string name="detail">Detail</string>
+    <string name="cannot_load_trending_movies_check_network_connection">Cannot load trending movies: check network
+        connection
+    </string>
+    <string name="cannot_load_trending_movies">Cannot load trending movies</string>
 </resources>

@@ -1,10 +1,8 @@
 package com.seungleekim.android.movie.ui.trending
 
-import android.util.Log
 import com.seungleekim.android.movie.di.ActivityScoped
 import com.seungleekim.android.movie.network.TmdbApi
 import com.seungleekim.android.movie.network.response.MoviesResponse
-import com.seungleekim.android.movie.util.NetworkUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -12,14 +10,13 @@ import javax.inject.Inject
 
 @ActivityScoped
 class TrendingMoviesPresenter @Inject constructor(
-    private val tmdbApi: TmdbApi,
-    private val networkUtils: NetworkUtils
+    private val tmdbApi: TmdbApi
 ) : TrendingMoviesContract.Presenter {
 
     private var mView: TrendingMoviesContract.View? = null
     private var mGetMovieDisposable: Disposable? = null
 
-    override fun getTrendingMovies() {
+    override fun loadTrendingMovies() {
         mGetMovieDisposable = tmdbApi.getTrendingMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -34,17 +31,11 @@ class TrendingMoviesPresenter @Inject constructor(
     }
 
     override fun onGetMoviesFailure(e: Throwable?) {
-        Log.e(e?.message, e?.stackTrace.toString())
-        var message = "Cannot load trending movies"
-        if (!networkUtils.hasNetworkConnection()) {
-            message = "Cannot load trending movies: Check network connection"
-        }
-        mView?.showFailureMessage(message)
+        mView?.showFailureMessage()
     }
 
     override fun takeView(view: TrendingMoviesContract.View) {
         mView = view
-        getTrendingMovies()
     }
 
     override fun dropView() {

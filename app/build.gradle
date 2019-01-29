@@ -91,8 +91,19 @@ dependencies {
     implementation "io.github.inflationx:calligraphy3:$calligraphyVersion"
     implementation "io.github.inflationx:viewpump:$viewPumpVersion"
 
-    // Testing Library
+    // Unit testing
     testImplementation "junit:junit:$jUnitVersion"
+    testImplementation "org.mockito:mockito-all:$mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "org.powermock:powermock-module-junit4:$powerMockVersion"
+    testImplementation "org.powermock:powermock-api-mockito:$powerMockVersion"
+
+    // AndroidX testing
     androidTestImplementation "androidx.test:runner:$testRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+
+
+
+
+
 }

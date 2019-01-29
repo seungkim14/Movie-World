@@ -8,12 +8,12 @@ interface TrendingMoviesContract {
 
     interface View : BaseContract.View<Presenter> {
         fun showTrendingMovies(movies: List<Movie>?)
-        fun showFailureMessage(errorMessage: String)
+        fun showFailureMessage()
         fun showMovieDetail(movie: Movie)
     }
 
     interface Presenter : BaseContract.Presenter<View> {
-        fun getTrendingMovies()
+        fun loadTrendingMovies()
         fun onGetMoviesSuccess(response: MoviesResponse?)
         fun onGetMoviesFailure(e: Throwable?)
     }
