@@ -5,6 +5,9 @@
 # ktlint
 ktlint
 
+# Fabric API Kea
+app/fabric.properties
+
 # Built application files
 *.apk
 *.ap_

@@ -10,4 +10,5 @@
         connection
     </string>
     <string name="cannot_load_trending_movies">Cannot load trending movies</string>
+    <string name="default_font_path">fonts/Raleway-Medium.ttf</string>
 </resources>

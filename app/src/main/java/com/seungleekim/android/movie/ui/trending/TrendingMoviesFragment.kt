@@ -13,6 +13,7 @@ import com.seungleekim.android.movie.ui.details.MovieDetailsActivity
 import com.seungleekim.android.movie.util.NetworkUtils
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_trending.*
+import timber.log.Timber
 import javax.inject.Inject
 
 @ActivityScoped
@@ -60,6 +61,7 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
             true -> getString(R.string.cannot_load_trending_movies_check_network_connection)
             false -> getString(R.string.cannot_load_trending_movies)
         }
+        Timber.d("TrendingMoviesFragment#showFailureMessage() - $errorMessage")
         Snackbar.make(rv_trending_movies, errorMessage, Snackbar.LENGTH_INDEFINITE).show()
     }
 
