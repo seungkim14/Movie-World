@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie
+package com.seungleekim.android.movie.util
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule

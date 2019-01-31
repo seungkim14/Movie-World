@@ -17,13 +17,18 @@ android {
     buildTypes {
         debug {
             minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
             applicationIdSuffix ".debug"
             debuggable true
         }
 
         release {
-            minifyEnabled false
+            minifyEnabled true
+            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
     }
 
@@ -84,7 +89,6 @@ dependencies {
     // Timber
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
-
     // Unit testing
     testImplementation "junit:junit:$jUnitVersion"
     testImplementation "org.mockito:mockito-all:$mockitoVersion"
@@ -92,7 +96,13 @@ dependencies {
     testImplementation "org.powermock:powermock-module-junit4:$powerMockVersion"
     testImplementation "org.powermock:powermock-api-mockito:$powerMockVersion"
 
-    // AndroidX testing
+    // AndroidX test runner and rules
     androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+    androidTestImplementation "androidx.test.ext:junit:$testAssertionVersion"
+
+    // Espresso UI testing
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
 }

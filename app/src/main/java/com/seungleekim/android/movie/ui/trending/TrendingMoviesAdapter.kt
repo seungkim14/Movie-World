@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.seungleekim.android.movie.GlideApp
+import com.seungleekim.android.movie.util.GlideApp
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.model.Movie
 import kotlinx.android.synthetic.main.vh_trending_movie.view.*

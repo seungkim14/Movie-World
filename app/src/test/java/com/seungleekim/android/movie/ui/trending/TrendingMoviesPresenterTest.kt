@@ -1,5 +1,6 @@
 package com.seungleekim.android.movie.ui.trending
 
+import com.seungleekim.android.movie.RxSchedulerOverrideRule
 import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.network.TmdbApi
 import com.seungleekim.android.movie.network.response.MoviesResponse
@@ -15,7 +16,7 @@ class TrendingMoviesPresenterTest {
     companion object {
         @ClassRule
         @JvmField
-        val rxSchedulerRule = RxSchedulerRule()
+        val rxSchedulerRule = RxSchedulerOverrideRule()
     }
 
     private lateinit var moviesResponse: MoviesResponse

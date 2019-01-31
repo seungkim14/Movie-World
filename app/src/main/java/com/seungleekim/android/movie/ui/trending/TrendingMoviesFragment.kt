@@ -12,7 +12,7 @@ import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.ui.details.MovieDetailsActivity
 import com.seungleekim.android.movie.util.NetworkUtils
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_trending.*
+import kotlinx.android.synthetic.main.fragment_trending.rv_trending_movies
 import timber.log.Timber
 import javax.inject.Inject
 

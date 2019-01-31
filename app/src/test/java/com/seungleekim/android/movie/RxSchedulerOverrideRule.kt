@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie.ui.trending
+package com.seungleekim.android.movie
 
 import io.reactivex.Scheduler
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -11,7 +11,8 @@ import org.junit.runners.model.Statement
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
-class RxSchedulerRule : TestRule {
+class RxSchedulerOverrideRule : TestRule {
+
     private val immediate = object : Scheduler() {
         override fun scheduleDirect(run: Runnable, delay: Long, unit: TimeUnit): Disposable {
             return super.scheduleDirect(run, 0, unit)
