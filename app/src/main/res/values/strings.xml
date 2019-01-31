@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">Movie-World</string>
+    <string name="app_name">Movie World</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="trending_now">Trending Now</string>
+    <string name="trending">Trending</string>
+    <string name="search">Search</string>
+    <string name="favorites">Favorites</string>
+    <string name="detail">Detail</string>
+    <string name="cannot_load_trending_movies_check_network_connection">Cannot load trending movies: check network
+        connection
+    </string>
+    <string name="cannot_load_trending_movies">Cannot load trending movies</string>
+    <string name="default_font_path">fonts/Raleway-Medium.ttf</string>
 </resources>

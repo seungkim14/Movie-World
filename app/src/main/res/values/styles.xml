@@ -1,11 +1,24 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.Movie" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+    </style>
+
+    <style name="Widget.Movie.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/Theme.Movie</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Movie.Toolbar</item>
+    </style>
+
+    <style name="TextAppearance.Movie.Toolbar" parent="android:TextAppearance">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">fonts/Raleway-ExtraBold.ttf</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
 </resources>
