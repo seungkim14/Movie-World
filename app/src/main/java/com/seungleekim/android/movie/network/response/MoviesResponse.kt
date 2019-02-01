@@ -5,5 +5,5 @@ import com.seungleekim.android.movie.model.Movie
 
 class MoviesResponse {
     @SerializedName("results")
-    lateinit var trendingMovies: List<Movie>
+    lateinit var movies: List<Movie>
 }

@@ -35,7 +35,7 @@ class TrendingMoviesPresenterTest {
 
         // Create moviesResponse
         moviesResponse = MoviesResponse()
-        moviesResponse.trendingMovies = listOf(
+        moviesResponse.movies = listOf(
             Movie(1, "firstTitle", "firstPosterPath", 1.0, "firstReleaseDate"),
             Movie(2, "secondTitle", "secondPosterPath", 2.0, "secondReleaseDate")
         )
@@ -47,7 +47,7 @@ class TrendingMoviesPresenterTest {
     @Test
     fun onGetMovieSuccess_ShowTrendingMovies() {
         mTrendingMoviesPresenter.onGetMoviesSuccess(moviesResponse)
-        verify(mTrendingMoviesView).showTrendingMovies(moviesResponse.trendingMovies)
+        verify(mTrendingMoviesView).showTrendingMovies(moviesResponse.movies)
     }
 
     @Test

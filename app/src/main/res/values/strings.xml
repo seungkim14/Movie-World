@@ -11,4 +11,13 @@
     </string>
     <string name="cannot_load_trending_movies">Cannot load trending movies</string>
     <string name="default_font_path">fonts/Raleway-Medium.ttf</string>
+    <string name="summary">Summary</string>
+    <string name="reviews">Reviews</string>
+    <string name="overview">Overview</string>
+    <string name="featured_crew">Featured Crew</string>
+    <string name="cast">Cast</string>
+    <string name="very_long_text">Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long
+        Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text
+        Very Long Text Very Long Text
+    </string>
 </resources>

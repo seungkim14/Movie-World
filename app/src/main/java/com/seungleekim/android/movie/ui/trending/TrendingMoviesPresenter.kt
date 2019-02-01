@@ -14,10 +14,10 @@ class TrendingMoviesPresenter @Inject constructor(
 ) : TrendingMoviesContract.Presenter {
 
     private var mView: TrendingMoviesContract.View? = null
-    private var mGetMovieDisposable: Disposable? = null
+    private var mGetMoviesDisposable: Disposable? = null
 
     override fun loadTrendingMovies() {
-        mGetMovieDisposable = tmdbApi.getTrendingMovies()
+        mGetMoviesDisposable = tmdbApi.getTrendingMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -27,7 +27,7 @@ class TrendingMoviesPresenter @Inject constructor(
     }
 
     override fun onGetMoviesSuccess(response: MoviesResponse?) {
-        mView?.showTrendingMovies(response?.trendingMovies)
+        mView?.showTrendingMovies(response?.movies)
     }
 
     override fun onGetMoviesFailure(e: Throwable?) {
@@ -40,6 +40,6 @@ class TrendingMoviesPresenter @Inject constructor(
 
     override fun dropView() {
         mView = null
-        mGetMovieDisposable?.dispose()
+        mGetMoviesDisposable?.dispose()
     }
 }

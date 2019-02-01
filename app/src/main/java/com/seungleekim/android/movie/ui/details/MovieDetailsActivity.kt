@@ -2,12 +2,12 @@ package com.seungleekim.android.movie.ui.details
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.model.Movie
+import dagger.android.support.DaggerAppCompatActivity
 
-class MovieDetailsActivity : AppCompatActivity() {
+class MovieDetailsActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

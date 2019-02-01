@@ -12,6 +12,7 @@
     <style name="Widget.Movie.Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:theme">@style/Theme.Movie</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="titleTextAppearance">@style/TextAppearance.Movie.Toolbar</item>
     </style>
 
