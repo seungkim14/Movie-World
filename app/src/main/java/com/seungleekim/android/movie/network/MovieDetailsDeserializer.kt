@@ -13,28 +13,30 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
 
         val id = getId(rootJsonObject)
         val backdropPath = getBackdropPath(rootJsonObject)
-        val genreIds = getGenres(rootJsonObject)
-        val overview = getOverview(rootJsonObject)
-        val releaseDate = getReleaseDate(rootJsonObject)
-        val duration = getDuration(rootJsonObject)
+        val title = getTitle(rootJsonObject)
         val rating = getRating(rootJsonObject)
-        val trailer = getTrailer(rootJsonObject)
-        val reviews = getReviews(rootJsonObject)
         val mpaaRating = getMpaaRating(rootJsonObject)
+        val duration = getDuration(rootJsonObject)
+        val genreIds = getGenres(rootJsonObject)
+        val releaseDate = getReleaseDate(rootJsonObject)
+        val trailer = getTrailer(rootJsonObject)
+        val overview = getOverview(rootJsonObject)
         val credits = getCredits(rootJsonObject)
+        val reviews = getReviews(rootJsonObject)
 
         return MovieDetails(
-            id,
-            backdropPath,
-            genreIds,
-            overview,
-            releaseDate,
-            duration,
-            rating,
-            trailer,
-            reviews,
-            mpaaRating,
-            credits
+            id = id,
+            backdropPath = backdropPath,
+            title = title,
+            rating = rating,
+            mpaaRating = mpaaRating,
+            runtime = duration,
+            genreIds = genreIds,
+            releaseDate = releaseDate,
+            trailer = trailer,
+            overview = overview,
+            credits = credits,
+            reviews = reviews
         )
     }
 
@@ -44,6 +46,10 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
 
     private fun getBackdropPath(rootJsonObject: JsonObject): String {
         return rootJsonObject.get("backdrop_path").asString
+    }
+
+    private fun getTitle(rootJsonObject: JsonObject): String {
+        return rootJsonObject.get("title").asString
     }
 
     private fun getGenres(rootJsonObject: JsonObject): MutableList<Int> {

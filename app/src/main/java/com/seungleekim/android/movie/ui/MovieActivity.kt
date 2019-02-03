@@ -9,15 +9,15 @@ import com.seungleekim.android.movie.ui.search.SearchMoviesFragment
 import com.seungleekim.android.movie.ui.trending.TrendingMoviesFragment
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_movie.*
 
-class MainActivity : DaggerAppCompatActivity() {
+class MovieActivity : DaggerAppCompatActivity() {
 
     private var currentFragmentTag: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_movie)
         initFragmentByTag(TAG_TRENDING_FRAGMENT)
         initBottomNavigationView()
     }

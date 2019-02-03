@@ -1,29 +1,51 @@
 package com.seungleekim.android.movie.model
 
-data class MovieDetails(
-    var id: Int,
-    var backdropPath: String?,
-    var genreIds: List<Int>?,
-    var overview: String?,
-    var releaseDate: String?,
-    var duration: Int?,
-    var rating: Double?,
-    var trailer: Trailer?,
-    var reviews: List<Review>?,
-    var mpaaRating: String?,
-    var credits: Credits?
-) {
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import timber.log.Timber
 
-    fun getBackdropUrl(): String {
-        return "http://image.tmdb.org/t/p/w780$backdropPath"
+@Parcelize
+data class MovieDetails(
+    val id: Int,
+    val title: String,
+    val backdropPath: String,
+    val rating: Double,
+    val mpaaRating: String?,
+    val runtime: Int,
+    val genreIds: List<Int>,
+    val releaseDate: String,
+    val trailer: Trailer,
+    val overview: String,
+    val credits: Credits,
+    val reviews: List<Review>
+) : Parcelable {
+
+    fun getTitleWithYear(): String {
+        return "$title (${getYear()})"
     }
 
-    fun getGenres(): String {
-        val genreNames = mutableListOf<String>()
-        genreIds?.forEach {
-            genreNames.add(getGenreById(it))
-        }
-        return genreNames.joinToString()
+    private fun getYear(): String{
+        return releaseDate.split("-")[0]
+    }
+
+    fun getRatingText(): String {
+        return "Rate: $rating"
+    }
+
+    fun getBackdropUrl(): String {
+        val backdropUrl = "http://image.tmdb.org/t/p/w780$backdropPath"
+        Timber.d(backdropUrl)
+        return backdropUrl
+    }
+
+    fun getFirstGenre(): String {
+        return getGenreById(genreIds.get(0))
+    }
+
+    fun getRuntimeString(): String {
+        val hours = runtime / 60
+        val minutes = runtime % 60
+        return "$hours hr $minutes min"
     }
 
     private fun getGenreById(genreId: Int): String {
@@ -43,12 +65,11 @@ data class MovieDetails(
             9648 -> "Mystery"
             10749 -> "Romance"
             878 -> "Science Fiction"
-            10770 -> "TV Movie"
+            10770 -> "TV TrendingMovie"
             53 -> "Thriller"
             10752 -> "War"
             37 -> "Western"
             else -> "NOT FOUND"
         }
     }
-
 }

@@ -6,20 +6,41 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
-        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/TextAppearance.Movie.Medium</item>
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
     <style name="Widget.Movie.Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:theme">@style/Theme.Movie</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="titleTextAppearance">@style/TextAppearance.Movie.Toolbar</item>
     </style>
 
-    <style name="TextAppearance.Movie.Toolbar" parent="android:TextAppearance">
+    <style name="TextAppearance.Movie.Toolbar" parent="TextAppearance.Movie.Bold">
         <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">fonts/Raleway-ExtraBold.ttf</item>
+        <item name="android:fontFamily">@font/raleway_bold</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.Movie.Transparent" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
+    <style name="TextAppearance.Movie.Medium" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/raleway_medium</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="TextAppearance.Movie.Light" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/raleway_light</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="TextAppearance.Movie.Bold" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
 </resources>

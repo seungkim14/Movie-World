@@ -8,8 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.seungleekim.android.movie.ui.MainActivity
-import org.junit.Before
+import com.seungleekim.android.movie.ui.MovieActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,29 +19,29 @@ class UINavigationTest {
 
     @Rule
     @JvmField
-    val mainActivityTestRule = ActivityTestRule<MainActivity>(MainActivity::class.java)
+    val mainActivityTestRule = ActivityTestRule<MovieActivity>(MovieActivity::class.java)
 
     @Test
     fun bottomNavigation_clickTrendingMovies_opensTrendingMoviesScreen() {
-        // Click trending movies tab
+        // Click trending trendingMovies tab
         onView(withId(R.id.bottom_navigation_trending)).perform(click())
-        // Check that trending movies fragment was opened
+        // Check that trending trendingMovies fragment was opened
         onView(withId(R.id.fragment_container_trending)).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_clickSearch_opensSearchMoviesScreen() {
-        // Click search movies tab
+        // Click search trendingMovies tab
         onView(withId(R.id.bottom_navigation_search)).perform(click())
-        // Check that search movies fragment was opened
+        // Check that search trendingMovies fragment was opened
         onView(withId(R.id.fragment_container_search)).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_clickFavorites_opensFavoriteMoviesScreen() {
-        // Click favorite movies tab
+        // Click favorite trendingMovies tab
         onView(withId(R.id.bottom_navigation_favorites)).perform(click())
-        // Check that favorite movies fragment was opened
+        // Check that favorite trendingMovies fragment was opened
         onView(withId(R.id.fragment_container_favorites)).check(matches(isDisplayed()))
     }
 }

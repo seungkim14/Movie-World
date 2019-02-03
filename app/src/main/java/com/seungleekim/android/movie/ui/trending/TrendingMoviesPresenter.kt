@@ -27,7 +27,7 @@ class TrendingMoviesPresenter @Inject constructor(
     }
 
     override fun onGetMoviesSuccess(response: MoviesResponse?) {
-        mView?.showTrendingMovies(response?.movies)
+        mView?.showTrendingMovies(response?.trendingMovies)
     }
 
     override fun onGetMoviesFailure(e: Throwable?) {

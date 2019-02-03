@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.di.ActivityScoped
-import com.seungleekim.android.movie.model.Movie
-import com.seungleekim.android.movie.ui.details.MovieDetailsActivity
+import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.ui.MovieDetailsActivity
 import com.seungleekim.android.movie.util.NetworkUtils
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_trending.rv_trending_movies
@@ -33,10 +33,6 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-    }
-
-    override fun onResume() {
-        super.onResume()
         mPresenter.takeView(this)
         mPresenter.loadTrendingMovies()
     }
@@ -52,8 +48,8 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
         rv_trending_movies.adapter = TrendingMoviesAdapter(this)
     }
 
-    override fun showTrendingMovies(movies: List<Movie>?) {
-        (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(movies)
+    override fun showTrendingMovies(trendingMovies: List<TrendingMovie>?) {
+        (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(trendingMovies)
     }
 
     override fun showFailureMessage() {
@@ -65,13 +61,13 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
         Snackbar.make(rv_trending_movies, errorMessage, Snackbar.LENGTH_INDEFINITE).show()
     }
 
-    override fun showMovieDetail(movie: Movie) {
-        val intent = MovieDetailsActivity.newIntent(context, movie)
+    override fun showMovieDetail(trendingMovie: TrendingMovie) {
+        val intent = MovieDetailsActivity.newIntent(context, trendingMovie)
         startActivity(intent)
     }
 
-    override fun onMovieClicked(movie: Movie) {
-        showMovieDetail(movie)
+    override fun onMovieClicked(trendingMovie: TrendingMovie) {
+        showMovieDetail(trendingMovie)
     }
 
     companion object {

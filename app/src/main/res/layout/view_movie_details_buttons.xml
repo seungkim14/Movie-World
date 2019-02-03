@@ -1,48 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/fragment_details"
+    tools:ignore="SmallSp">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_watch_trailer"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_watch_trailer"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib_get_tickets"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="16dp"
+        android:orientation="vertical"/>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_get_tickets"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_get_tickets"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ib_watch_trailer"
-            app:layout_constraintEnd_toStartOf="@id/ib_share"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="16dp"
+        android:orientation="vertical"/>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_share"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_share"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ib_get_tickets"
-            app:layout_constraintEnd_toStartOf="@id/ib_add_to_favorite"/>
+    <Button
+        android:id="@+id/btn_watch_trailer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/watch_trailer"
+        android:textAppearance="@style/TextAppearance.Movie.Light"
+        android:textSize="10sp"
+        android:drawableTop="@drawable/ic_watch_trailer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline_left"
+        app:layout_constraintEnd_toStartOf="@id/btn_get_tickets"/>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_add_to_favorite"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_favorite"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ib_share"
-            app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+        android:id="@+id/btn_get_tickets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/get_tickets"
+        android:textAppearance="@style/TextAppearance.Movie.Light"
+        android:textSize="10sp"
+        android:drawableTop="@drawable/ic_get_tickets"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_watch_trailer"
+        app:layout_constraintEnd_toStartOf="@id/btn_share"/>
+
+    <Button
+        android:id="@+id/btn_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share"
+        android:textAppearance="@style/TextAppearance.Movie.Light"
+        android:textSize="10sp"
+        android:drawableTop="@drawable/ic_share"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_get_tickets"
+        app:layout_constraintEnd_toStartOf="@id/btn_add_to_favorites" />
+
+    <Button
+        android:id="@+id/btn_add_to_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_favorites"
+        android:textAppearance="@style/TextAppearance.Movie.Light"
+        android:textSize="10sp"
+        android:drawableTop="@drawable/ic_favorite_white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_share"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline_right"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

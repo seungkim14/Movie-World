@@ -6,10 +6,10 @@
     <string name="search">Search</string>
     <string name="favorites">Favorites</string>
     <string name="detail">Detail</string>
-    <string name="cannot_load_trending_movies_check_network_connection">Cannot load trending movies: check network
+    <string name="cannot_load_trending_movies_check_network_connection">Cannot load trending trendingMovies: check network
         connection
     </string>
-    <string name="cannot_load_trending_movies">Cannot load trending movies</string>
+    <string name="cannot_load_trending_movies">Cannot load trending trendingMovies</string>
     <string name="default_font_path">fonts/Raleway-Medium.ttf</string>
     <string name="summary">Summary</string>
     <string name="reviews">Reviews</string>
@@ -20,4 +20,8 @@
         Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text
         Very Long Text Very Long Text
     </string>
+    <string name="watch_trailer">Watch Trailer</string>
+    <string name="get_tickets">Get Tickets</string>
+    <string name="share">Share</string>
+    <string name="add_to_favorites">Add to favorites</string>
 </resources>

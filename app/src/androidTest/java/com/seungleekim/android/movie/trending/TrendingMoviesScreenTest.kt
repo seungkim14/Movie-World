@@ -13,9 +13,8 @@ import androidx.test.rule.ActivityTestRule
 import com.seungleekim.android.movie.CustomMatchers.Companion.hasDrawable
 import com.seungleekim.android.movie.CustomMatchers.Companion.withIndex
 import com.seungleekim.android.movie.R
-import com.seungleekim.android.movie.model.Movie
-import com.seungleekim.android.movie.ui.MainActivity
-import com.seungleekim.android.movie.ui.trending.TrendingMoviesAdapter
+import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.ui.MovieActivity
 import com.seungleekim.android.movie.ui.trending.TrendingMoviesFragment
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.Before
@@ -29,19 +28,19 @@ class TrendingMoviesScreenTest {
 
     @Rule
     @JvmField
-    val mainActivityTestRule = ActivityTestRule<MainActivity>(MainActivity::class.java)
+    val mainActivityTestRule = ActivityTestRule<MovieActivity>(MovieActivity::class.java)
 
     // Too lazy to make mock product flavor...
-    val FAKE_TRENDING_MOVIES: MutableList<Movie> = mutableListOf()
+    val FAKE_TRENDING_Trending_MOVIES: MutableList<TrendingMovie> = mutableListOf()
 
     @Before
     fun populateFakeMoviesIntoUi() {
-        // Populate trending movies screen with fake movies
+        // Populate trending trendingMovies screen with fake trendingMovies
         for (i in 1..5) {
-            FAKE_TRENDING_MOVIES.add(Movie(i, "title{$i}", "file:///android_asset/test-image.png", i.toDouble(), "releaseDate{$i}"))
+            FAKE_TRENDING_Trending_MOVIES.add(TrendingMovie(i, "title{$i}", "file:///android_asset/test-image.png", "releaseDate{$i}"))
         }
-        ((mainActivityTestRule.activity as MainActivity).supportFragmentManager.findFragmentByTag(MainActivity.TAG_TRENDING_FRAGMENT)
-                as TrendingMoviesFragment).showTrendingMovies(FAKE_TRENDING_MOVIES)
+        ((mainActivityTestRule.activity as MovieActivity).supportFragmentManager.findFragmentByTag(MovieActivity.TAG_TRENDING_FRAGMENT)
+                as TrendingMoviesFragment).showTrendingMovies(FAKE_TRENDING_Trending_MOVIES)
     }
 
 
@@ -66,6 +65,6 @@ class TrendingMoviesScreenTest {
         onView(withId(R.id.rv_trending_movies)).perform(
             actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
         // Check if the movie detail fragment is displayed
-        onView(withId(R.id.fragment_container_detail)).check(matches(isDisplayed()))
+        onView(withId(R.id.fragment_container_details)).check(matches(isDisplayed()))
     }
 }

@@ -1,2 +1,2 @@
 # :construction: [WIP] Movie-World :construction:
-:movie_camera: An Android app for the movie fans
+:movie_camera: An Android app for the trendingMovie fans
