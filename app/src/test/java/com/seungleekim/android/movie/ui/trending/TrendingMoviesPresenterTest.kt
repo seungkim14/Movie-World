@@ -36,8 +36,8 @@ class TrendingMoviesPresenterTest {
         // Create moviesResponse
         moviesResponse = MoviesResponse()
         moviesResponse.movies = listOf(
-            Movie(1, "firstTitle", "firstPosterPath", 1.0, "firstReleaseDate"),
-            Movie(2, "secondTitle", "secondPosterPath", 2.0, "secondReleaseDate")
+            Movie(1, "firstTitle", "firstPosterPath", "firstReleaseDate"),
+            Movie(2, "secondTitle", "secondPosterPath", "secondReleaseDate")
         )
 
         mTrendingMoviesPresenter = TrendingMoviesPresenter(tmdbApi)

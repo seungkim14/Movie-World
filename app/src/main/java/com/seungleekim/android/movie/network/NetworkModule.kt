@@ -1,5 +1,8 @@
 package com.seungleekim.android.movie.network
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.seungleekim.android.movie.model.MovieDetails
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -29,11 +32,20 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
+    fun provideGson() : Gson {
+        return GsonBuilder()
+            .registerTypeAdapter(MovieDetails::class.java,
+                MovieDetailsDeserializer()
+            )
+            .create()
+    }
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String, gson: Gson): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
