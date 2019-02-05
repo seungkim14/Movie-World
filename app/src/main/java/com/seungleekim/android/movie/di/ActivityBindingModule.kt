@@ -12,7 +12,7 @@ abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [TrendingMoviesModule::class])
-    internal abstract fun mainActivity(): MovieActivity
+    internal abstract fun movieActivity(): MovieActivity
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = [MovieDetailsModule::class])

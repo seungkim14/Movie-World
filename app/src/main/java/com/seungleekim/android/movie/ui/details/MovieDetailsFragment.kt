@@ -1,21 +1,29 @@
 package com.seungleekim.android.movie.ui.details
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.seungleekim.android.movie.R
+import com.seungleekim.android.movie.di.ActivityScoped
 import com.seungleekim.android.movie.model.MovieDetails
+import com.seungleekim.android.movie.model.Trailer
 import com.seungleekim.android.movie.model.TrendingMovie
 import com.seungleekim.android.movie.ui.MovieDetailsActivity
 import com.seungleekim.android.movie.util.GlideApp
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.view_movie_details_top.*
+import kotlinx.android.synthetic.main.view_movie_details_trailers.*
 import javax.inject.Inject
 
-class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetailsContract.View {
+@ActivityScoped
+class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetailsContract.View,
+    MovieTrailersAdapter.OnClickListener {
 
     @Inject
     lateinit var mPresenter: MovieDetailsContract.Presenter
@@ -36,6 +44,7 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         super.onViewCreated(view, savedInstanceState)
         mPresenter.takeView(this)
         mPresenter.getMovieDetails(mTrendingMovie!!)
+        mPresenter.getFavorite(mTrendingMovie!!)
         setupToolbar()
     }
 
@@ -59,49 +68,62 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         showMovieMpaaRating(movieDetails.mpaaRating)
         showMovieDuration(movieDetails.getRuntimeString())
         showMovieGenres(movieDetails.getFirstGenre())
-        showMovieReleasedate(movieDetails.releaseDate)
+        showMovieReleaseDate(movieDetails.releaseDate)
+        showMovieTrailers(movieDetails.trailers)
     }
 
-    private fun showMovieTitle(title: String) {
+    override fun showMovieTitle(title: String) {
         collapsing_toolbar.title = title
         tv_movie_details_title.text = title
     }
 
-    private fun showMovieBackdrop(backdropUrl: String) {
+    override fun showMovieBackdrop(backdropUrl: String) {
         GlideApp.with(context!!).load(backdropUrl).into(iv_details_movie_backdrop)
     }
 
-    private fun showMovieRating(rating: String) {
+    override fun showMovieRating(rating: String) {
         tv_movie_details_rating.text = rating
     }
 
-    private fun showMovieMpaaRating(mpaaRating: String?) {
+    override fun showMovieMpaaRating(mpaaRating: String?) {
         tv_movie_details_mpaa_rating.text = mpaaRating
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showMovieDuration(runtime: String) {
+    override fun showMovieDuration(runtime: String) {
         tv_movie_details_runtime.text = runtime
     }
 
-    private fun showMovieGenres(genres: String) {
+    override fun showMovieGenres(genres: String) {
         tv_movie_details_genres.text = genres
     }
 
-    private fun showMovieReleasedate(releaseDate: String) {
+    override fun showMovieReleaseDate(releaseDate: String) {
         tv_movie_details_release_date.text = releaseDate
     }
 
-    override fun showMovieTrailer() {
+    override fun showMovieTrailers(trailers: List<Trailer>) {
+        if (trailers.isEmpty()) {
+            return
+        }
+        container_view_movie_details_trailers.visibility = View.VISIBLE
+        rv_movie_details_trailers.setHasFixedSize(true)
+        rv_movie_details_trailers.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rv_movie_details_trailers.adapter = MovieTrailersAdapter(this)
+        (rv_movie_details_trailers.adapter as MovieTrailersAdapter).submitList(trailers)
     }
 
-    override fun showGetTickets() {
+    override fun onTrailerClick(trailer: Trailer) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailer.getYoutubeUrl()))
+        startActivity(intent)
     }
 
-    override fun showShare() {
-    }
+    override fun showFavorite(b: Boolean) {
+        if (b) {
 
-    override fun setFavorite(b: Boolean) {
+        } else {
+
+        }
     }
 
     companion object {

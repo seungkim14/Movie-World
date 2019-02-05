@@ -19,7 +19,7 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
         val duration = getDuration(rootJsonObject)
         val genreIds = getGenres(rootJsonObject)
         val releaseDate = getReleaseDate(rootJsonObject)
-        val trailer = getTrailer(rootJsonObject)
+        val trailers = getTrailers(rootJsonObject)
         val overview = getOverview(rootJsonObject)
         val credits = getCredits(rootJsonObject)
         val reviews = getReviews(rootJsonObject)
@@ -33,7 +33,7 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
             runtime = duration,
             genreIds = genreIds,
             releaseDate = releaseDate,
-            trailer = trailer,
+            trailers = trailers,
             overview = overview,
             credits = credits,
             reviews = reviews
@@ -78,14 +78,20 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
         return rootJsonObject.get("vote_average").asDouble
     }
 
-    private fun getTrailer(rootJsonObject: JsonObject): Trailer {
+    private fun getTrailers(rootJsonObject: JsonObject): List<Trailer> {
+        val trailers = mutableListOf<Trailer>()
         val videosJsonArray = getJsonArrayFromJsonObject(rootJsonObject, "videos")
-        val videoJsonObject = videosJsonArray.get(0).asJsonObject
-        return Trailer(
-            id = videoJsonObject.get("id").asString,
-            site = videoJsonObject.get("site").asString,
-            key = videoJsonObject.get("key").asString
-        )
+        for (videosJsonElement in videosJsonArray) {
+            val videoJsonObject = videosJsonElement.asJsonObject
+            val trailer = Trailer(
+                id = videoJsonObject.get("id").asString,
+                name = videoJsonObject.get("name").asString,
+                site = videoJsonObject.get("site").asString,
+                key = videoJsonObject.get("key").asString
+            )
+            trailers.add(trailer)
+        }
+        return trailers
     }
 
     private fun getReviews(rootJsonObject: JsonObject): MutableList<Review> {

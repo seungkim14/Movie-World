@@ -14,7 +14,7 @@ data class MovieDetails(
     val runtime: Int,
     val genreIds: List<Int>,
     val releaseDate: String,
-    val trailer: Trailer,
+    val trailers: List<Trailer>,
     val overview: String,
     val credits: Credits,
     val reviews: List<Review>

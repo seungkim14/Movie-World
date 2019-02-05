@@ -49,11 +49,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <include layout="@layout/view_movie_details_top" />
 
-            <include layout="@layout/view_movie_details_buttons" />
+            <include layout="@layout/view_movie_details_trailers" />
 
             <include layout="@layout/view_movie_details_tabs" />
 
