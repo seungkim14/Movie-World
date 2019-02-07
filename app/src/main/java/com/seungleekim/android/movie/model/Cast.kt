@@ -9,4 +9,8 @@ class Cast (
     val order: Int,
     val name: String,
     val character: String
-) : Parcelable
+) : Parcelable {
+
+    override fun toString() = "$name ($character)"
+
+}

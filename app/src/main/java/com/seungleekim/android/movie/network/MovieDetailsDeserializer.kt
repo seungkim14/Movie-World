@@ -16,12 +16,13 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
         val title = getTitle(rootJsonObject)
         val rating = getRating(rootJsonObject)
         val mpaaRating = getMpaaRating(rootJsonObject)
-        val duration = getDuration(rootJsonObject)
+        val duration = getRuntime(rootJsonObject)
         val genreIds = getGenres(rootJsonObject)
         val releaseDate = getReleaseDate(rootJsonObject)
         val trailers = getTrailers(rootJsonObject)
         val overview = getOverview(rootJsonObject)
-        val credits = getCredits(rootJsonObject)
+        val casts = getCasts(rootJsonObject)
+        val crews = getCrews(rootJsonObject)
         val reviews = getReviews(rootJsonObject)
 
         return MovieDetails(
@@ -35,7 +36,8 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
             releaseDate = releaseDate,
             trailers = trailers,
             overview = overview,
-            credits = credits,
+            crews = crews,
+            casts = casts,
             reviews = reviews
         )
     }
@@ -44,12 +46,33 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
         return rootJsonObject.get("id").asInt
     }
 
+    private fun getTitle(rootJsonObject: JsonObject): String {
+        return rootJsonObject.get("title").asString
+    }
+
     private fun getBackdropPath(rootJsonObject: JsonObject): String {
         return rootJsonObject.get("backdrop_path").asString
     }
 
-    private fun getTitle(rootJsonObject: JsonObject): String {
-        return rootJsonObject.get("title").asString
+    private fun getRating(rootJsonObject: JsonObject): Double {
+        return rootJsonObject.get("vote_average").asDouble
+    }
+
+    private fun getMpaaRating(rootJsonObject: JsonObject): String? {
+        val releaseDatesJsonArray = getJsonArrayFromJsonObject(rootJsonObject, "release_dates")
+        for (releaseDateJsonElement in releaseDatesJsonArray) {
+            val releaseDateJsonObject = releaseDateJsonElement.asJsonObject
+            val iso = releaseDateJsonObject.get("iso_3166_1").asString
+            if (iso == "US") {
+                return releaseDateJsonObject.get("release_dates").asJsonArray.get(0)
+                    .asJsonObject.get("certification").asString
+            }
+        }
+        return null
+    }
+
+    private fun getRuntime(rootJsonObject: JsonObject): Int {
+        return rootJsonObject.get("runtime").asInt
     }
 
     private fun getGenres(rootJsonObject: JsonObject): MutableList<Int> {
@@ -62,20 +85,8 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
         return genreIds
     }
 
-    private fun getOverview(rootJsonObject: JsonObject): String {
-        return rootJsonObject.get("overview").asString
-    }
-
     private fun getReleaseDate(rootJsonObject: JsonObject): String {
         return rootJsonObject.get("release_date").asString
-    }
-
-    private fun getDuration(rootJsonObject: JsonObject): Int {
-        return rootJsonObject.get("runtime").asInt
-    }
-
-    private fun getRating(rootJsonObject: JsonObject): Double {
-        return rootJsonObject.get("vote_average").asDouble
     }
 
     private fun getTrailers(rootJsonObject: JsonObject): List<Trailer> {
@@ -94,47 +105,33 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
         return trailers
     }
 
-    private fun getReviews(rootJsonObject: JsonObject): MutableList<Review> {
-        val reviews = mutableListOf<Review>()
-        val reviewsJsonArray = getJsonArrayFromJsonObject(rootJsonObject, "reviews")
-        for (reviewJsonElement in reviewsJsonArray) {
-            val reviewJsonObject = reviewJsonElement.asJsonObject
-            val review = Review(
-                id = reviewJsonObject.get("id").asString,
-                author = reviewJsonObject.get("author").asString,
-                content = reviewJsonObject.get("content").asString
-            )
-            reviews.add(review)
-        }
-        return reviews
+    private fun getOverview(rootJsonObject: JsonObject): String {
+        return rootJsonObject.get("overview").asString
     }
 
-    private fun getMpaaRating(rootJsonObject: JsonObject): String? {
-        val releaseDatesJsonArray = getJsonArrayFromJsonObject(rootJsonObject, "release_dates")
-        for (releaseDateJsonElement in releaseDatesJsonArray) {
-            val releaseDateJsonObject = releaseDateJsonElement.asJsonObject
-            val iso = releaseDateJsonObject.get("iso_3166_1").asString
-            if (iso == "US") {
-                return releaseDateJsonObject.get("release_dates").asJsonArray.get(0)
-                    .asJsonObject.get("certification").asString
+    private fun getCrews(rootJsonObject: JsonObject): List<Crew> {
+        val crews = mutableListOf<Crew>()
+        val creditsJsonObject = rootJsonObject.get("credits").asJsonObject
+        val crewsJsonArray = creditsJsonObject.get("crew").asJsonArray
+        for (crewJsonElement in crewsJsonArray) {
+            val crewJsonObject = crewJsonElement.asJsonObject
+            val department = crewJsonObject.get("department").asString
+            if (department == "Directing" || department == "Writing") {
+                val crew = Crew(
+                    id = crewJsonObject.get("id").asInt,
+                    name = crewJsonObject.get("name").asString,
+                    department = department,
+                    job = crewJsonObject.get("job").asString
+                )
+                crews.add(crew)
             }
         }
-        return null
+        return crews
     }
 
-    private fun getJsonArrayFromJsonObject(jsonObject: JsonObject, keyword: String): JsonArray {
-        return jsonObject.get(keyword).asJsonObject.get("results").asJsonArray
-    }
-
-    private fun getCredits(rootJsonObject: JsonObject) : Credits {
-        val creditsJsonObject = rootJsonObject.get("credits").asJsonObject
-        val casts = getCasts(creditsJsonObject)
-        val crews = getCrews(creditsJsonObject)
-        return Credits(casts, crews)
-    }
-
-    private fun getCasts(creditsJsonObject: JsonObject): MutableList<Cast> {
+    private fun getCasts(rootJsonObject: JsonObject) : List<Cast> {
         val casts = mutableListOf<Cast>()
+        val creditsJsonObject = rootJsonObject.get("credits").asJsonObject
         val castsJsonArray = creditsJsonObject.get("cast").asJsonArray
         for (castJsonElement in castsJsonArray) {
             val castJsonObject = castJsonElement.asJsonObject
@@ -151,22 +148,22 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
         return casts
     }
 
-    private fun getCrews(creditsJsonObject: JsonObject): MutableList<Crew> {
-        val crews = mutableListOf<Crew>()
-        val crewsJsonArray = creditsJsonObject.get("crew").asJsonArray
-        for (crewJsonElement in crewsJsonArray) {
-            val crewJsonObject = crewJsonElement.asJsonObject
-            val department = crewJsonObject.get("department").asString
-            if (department == "Directing" || department == "Writing") {
-                val crew = Crew(
-                    id = crewJsonObject.get("id").asInt,
-                    name = crewJsonObject.get("name").asString,
-                    department = department,
-                    job = crewJsonObject.get("job").asString
-                )
-                crews.add(crew)
-            }
+    private fun getReviews(rootJsonObject: JsonObject): MutableList<Review> {
+        val reviews = mutableListOf<Review>()
+        val reviewsJsonArray = getJsonArrayFromJsonObject(rootJsonObject, "reviews")
+        for (reviewJsonElement in reviewsJsonArray) {
+            val reviewJsonObject = reviewJsonElement.asJsonObject
+            val review = Review(
+                id = reviewJsonObject.get("id").asString,
+                author = reviewJsonObject.get("author").asString,
+                content = reviewJsonObject.get("content").asString
+            )
+            reviews.add(review)
         }
-        return crews
+        return reviews
+    }
+
+    private fun getJsonArrayFromJsonObject(jsonObject: JsonObject, keyword: String): JsonArray {
+        return jsonObject.get(keyword).asJsonObject.get("results").asJsonArray
     }
 }

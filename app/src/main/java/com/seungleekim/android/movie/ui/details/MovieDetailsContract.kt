@@ -1,9 +1,7 @@
 package com.seungleekim.android.movie.ui.details
 
 import android.annotation.SuppressLint
-import com.seungleekim.android.movie.model.TrendingMovie
-import com.seungleekim.android.movie.model.MovieDetails
-import com.seungleekim.android.movie.model.Trailer
+import com.seungleekim.android.movie.model.*
 import com.seungleekim.android.movie.ui.BaseContract
 
 interface MovieDetailsContract {
@@ -19,11 +17,15 @@ interface MovieDetailsContract {
         fun showMovieReleaseDate(releaseDate: String)
         fun showFavorite(b: Boolean)
         fun showMovieTrailers(trailers: List<Trailer>)
+        fun showMovieOverview(overview: String?)
+        fun showMovieCasts(casts: String?)
+        fun showMovieCrews(crews: String?)
+        fun showMovieReviews(reviews: String?)
     }
 
     interface Presenter : BaseContract.Presenter<View> {
         fun getMovieDetails(trendingMovie: TrendingMovie)
         fun getFavorite(trendingMovie: TrendingMovie)
-        fun addToFavorite(b: Boolean)
+        fun setFavorite(b: Boolean)
     }
 }

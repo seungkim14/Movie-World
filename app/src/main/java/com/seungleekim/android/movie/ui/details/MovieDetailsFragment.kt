@@ -10,15 +10,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.di.ActivityScoped
-import com.seungleekim.android.movie.model.MovieDetails
-import com.seungleekim.android.movie.model.Trailer
-import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.model.*
 import com.seungleekim.android.movie.ui.MovieDetailsActivity
 import com.seungleekim.android.movie.util.GlideApp
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.view_movie_details_top.*
 import kotlinx.android.synthetic.main.view_movie_details_trailers.*
+import kotlinx.android.synthetic.main.view_movie_details_summary_reviews.*
 import javax.inject.Inject
 
 @ActivityScoped
@@ -70,6 +69,10 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         showMovieGenres(movieDetails.getFirstGenre())
         showMovieReleaseDate(movieDetails.releaseDate)
         showMovieTrailers(movieDetails.trailers)
+        showMovieOverview(movieDetails.overview)
+        showMovieCasts(movieDetails.getCastsString())
+        showMovieCrews(movieDetails.getCrewsString())
+        showMovieReviews(movieDetails.getReviewsString())
     }
 
     override fun showMovieTitle(title: String) {
@@ -102,11 +105,19 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         tv_movie_details_release_date.text = releaseDate
     }
 
+    override fun showFavorite(b: Boolean) {
+        if (b) {
+
+        } else {
+
+        }
+    }
+
     override fun showMovieTrailers(trailers: List<Trailer>) {
         if (trailers.isEmpty()) {
             return
         }
-        container_view_movie_details_trailers.visibility = View.VISIBLE
+        showView(container_view_movie_details_trailers)
         rv_movie_details_trailers.setHasFixedSize(true)
         rv_movie_details_trailers.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rv_movie_details_trailers.adapter = MovieTrailersAdapter(this)
@@ -118,12 +129,44 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         startActivity(intent)
     }
 
-    override fun showFavorite(b: Boolean) {
-        if (b) {
-
-        } else {
-
+    override fun showMovieOverview(overview: String?) {
+        if (overview == null) {
+            return
         }
+        showView(container_movie_details_overview)
+        tv_movie_details_overview_content.text = overview
+    }
+
+    override fun showMovieCasts(casts: String?) {
+        if (casts == null) {
+            return
+        }
+        showView(container_movie_details_casts)
+        tv_movie_details_casts_content.text = casts
+
+    }
+    override fun showMovieCrews(crews: String?) {
+        if (crews == null) {
+            return
+        }
+        showView(container_movie_details_crews)
+        tv_movie_details_featured_crews_content.text = crews
+    }
+
+    override fun showMovieReviews(reviews: String?) {
+        if (reviews == null) {
+            return
+        }
+        showView(container_movie_details_reviews)
+        tv_movie_details_featured_reviews_content.text = reviews
+    }
+
+    private fun showView(v: View?) {
+        v?.visibility = View.VISIBLE
+    }
+
+    private fun hideView(v: View?) {
+        v?.visibility = View.GONE
     }
 
     companion object {

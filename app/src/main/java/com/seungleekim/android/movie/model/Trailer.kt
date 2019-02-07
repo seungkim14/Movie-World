@@ -21,7 +21,7 @@ class Trailer(
 
     fun getYoutubeUrl(): String {
         return if (site.equals("Youtube", ignoreCase = true)) {
-            "http://www.youtube.com/watch?v=%1$key"
+            "http://www.youtube.com/watch?v=$key"
         } else {
             ""
         }

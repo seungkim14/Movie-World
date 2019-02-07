@@ -40,7 +40,7 @@ class MovieDetailsPresenter @Inject constructor(
     }
 
 
-    override fun addToFavorite(b: Boolean) {
+    override fun setFavorite(b: Boolean) {
     }
 
 

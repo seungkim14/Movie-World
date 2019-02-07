@@ -14,8 +14,7 @@
     <string name="summary">Summary</string>
     <string name="reviews">Reviews</string>
     <string name="overview">Overview</string>
-    <string name="featured_crew">Featured Crew</string>
-    <string name="cast">Cast</string>
+    <string name="featured_crews">Featured Crews</string>
     <string name="very_long_text">Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long
         Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text Very Long Text
         Very Long Text Very Long Text
@@ -24,6 +23,7 @@
     <string name="get_tickets">Get Tickets</string>
     <string name="share">Share</string>
     <string name="add_to_favorites">Add to favorites</string>
-    <string name="watch_trailer_on_youtube">Watch Trailer on YouTube</string>
+    <string name="watch_trailers_on_youtube">Watch Trailers on YouTube</string>
     <string name="trailer">Trailer</string>
+    <string name="casts">Casts</string>
 </resources>

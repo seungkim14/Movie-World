@@ -2,7 +2,6 @@ package com.seungleekim.android.movie.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import timber.log.Timber
 
 @Parcelize
 data class MovieDetails(
@@ -16,7 +15,8 @@ data class MovieDetails(
     val releaseDate: String,
     val trailers: List<Trailer>,
     val overview: String,
-    val credits: Credits,
+    val crews: List<Crew>,
+    val casts: List<Cast>,
     val reviews: List<Review>
 ) : Parcelable {
 
@@ -34,12 +34,11 @@ data class MovieDetails(
 
     fun getBackdropUrl(): String {
         val backdropUrl = "http://image.tmdb.org/t/p/w780$backdropPath"
-        Timber.d(backdropUrl)
         return backdropUrl
     }
 
     fun getFirstGenre(): String {
-        return getGenreById(genreIds.get(0))
+        return getGenreById(genreIds[0])
     }
 
     fun getRuntimeString(): String {
@@ -69,7 +68,26 @@ data class MovieDetails(
             53 -> "Thriller"
             10752 -> "War"
             37 -> "Western"
-            else -> "NOT FOUND"
+            else -> ""
         }
+    }
+
+    fun getCastsString() = listToString(casts)
+
+    fun getCrewsString() = listToString(crews)
+
+    fun getReviewsString() = listToString(reviews)
+
+    private fun listToString(list: List<Any>) : String? {
+        if (list.isEmpty()) {
+            return null
+        }
+        var lineBreak = ""
+        val sb = StringBuilder()
+        for (element in list) {
+            sb.append(lineBreak).append(element.toString())
+            lineBreak = "\n"
+        }
+        return sb.toString()
     }
 }

@@ -9,4 +9,7 @@ class Crew(
     val name: String,
     val department: String,
     val job: String
-) : Parcelable
+) : Parcelable {
+
+    override fun toString() = "$name ($job)"
+}

@@ -29,7 +29,7 @@
         android:id="@+id/tv_watch_trailer_on_youtube"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/watch_trailer_on_youtube"
+        android:text="@string/watch_trailers_on_youtube"
         android:textSize="15sp"
         android:textAlignment="center"
         android:drawableStart="@drawable/ic_youtube"
