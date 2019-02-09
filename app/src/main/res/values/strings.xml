@@ -6,11 +6,10 @@
     <string name="search">Search</string>
     <string name="favorites">Favorites</string>
     <string name="detail">Detail</string>
-    <string name="cannot_load_trending_movies_check_network_connection">Cannot load trending trendingMovies: check network
+    <string name="cannot_load_trending_movies_check_network_connection">Cannot load trending movies: check network
         connection
     </string>
-    <string name="cannot_load_trending_movies">Cannot load trending trendingMovies</string>
-    <string name="default_font_path">fonts/Raleway-Medium.ttf</string>
+    <string name="cannot_load_trending_movies">Cannot load trending movies</string>
     <string name="summary">Summary</string>
     <string name="reviews">Reviews</string>
     <string name="overview">Overview</string>

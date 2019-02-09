@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.seungleekim.android.movie.R
-import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.ui.details.MovieDetailsFragment
 import dagger.android.support.DaggerAppCompatActivity
 
@@ -15,7 +15,7 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val movie = intent.getParcelableExtra<TrendingMovie>(EXTRA_MOVIE_DETAIL)
+        val movie = intent.getParcelableExtra<Movie>(EXTRA_MOVIE_DETAIL)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -39,9 +39,9 @@ class MovieDetailsActivity : DaggerAppCompatActivity() {
     companion object {
         private const val EXTRA_MOVIE_DETAIL = "movie_detail"
 
-        fun newIntent(context: Context?, trendingMovie: TrendingMovie): Intent {
+        fun newIntent(context: Context?, movie: Movie): Intent {
             return Intent(context, MovieDetailsActivity::class.java).apply {
-                putExtra(EXTRA_MOVIE_DETAIL, trendingMovie)
+                putExtra(EXTRA_MOVIE_DETAIL, movie)
             }
         }
     }

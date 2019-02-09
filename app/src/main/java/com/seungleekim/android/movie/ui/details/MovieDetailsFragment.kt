@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.di.ActivityScoped
@@ -27,12 +29,12 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
     @Inject
     lateinit var mPresenter: MovieDetailsContract.Presenter
 
-    private var mTrendingMovie: TrendingMovie? = null
+    private var mMovie: Movie? = null
     private var mMovieDetails: MovieDetails? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTrendingMovie = arguments?.getParcelable(ARG_MOVIE)
+        mMovie = arguments?.getParcelable(ARG_MOVIE)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,15 +44,22 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mPresenter.takeView(this)
-        mPresenter.getMovieDetails(mTrendingMovie!!)
-        mPresenter.getFavorite(mTrendingMovie!!)
+        mPresenter.getMovieDetails(mMovie!!)
+        mPresenter.getFavorite(mMovie!!)
         setupToolbar()
+        setupFavoriteFab()
     }
 
     private fun setupToolbar() {
         (activity as MovieDetailsActivity).apply {
             setSupportActionBar(toolbar_details)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    private fun setupFavoriteFab() {
+        fab_movie_details_favorite.setOnClickListener {
+            mPresenter.onFavoriteFabClick(mMovie!!)
         }
     }
 
@@ -106,10 +115,11 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
     }
 
     override fun showFavorite(b: Boolean) {
+
         if (b) {
-
+            fab_movie_details_favorite.setImageResource(R.drawable.ic_favorite_full)
         } else {
-
+            fab_movie_details_favorite.setImageResource(R.drawable.ic_favorite_empty)
         }
     }
 
@@ -161,6 +171,10 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         tv_movie_details_featured_reviews_content.text = reviews
     }
 
+    override fun showFailureMessage() {
+        Toast.makeText(context, "DB Transaction Failed", Toast.LENGTH_LONG).show()
+    }
+
     private fun showView(v: View?) {
         v?.visibility = View.VISIBLE
     }
@@ -170,12 +184,12 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
     }
 
     companion object {
-        private const val ARG_MOVIE = "mTrendingMovie"
+        private const val ARG_MOVIE = "mMovie"
 
-        fun newInstance(trendingMovie: TrendingMovie): MovieDetailsFragment {
+        fun newInstance(movie: Movie): MovieDetailsFragment {
             val fragment = MovieDetailsFragment()
             val args = Bundle()
-            args.putParcelable(ARG_MOVIE, trendingMovie)
+            args.putParcelable(ARG_MOVIE, movie)
             fragment.arguments = args
             return fragment
         }

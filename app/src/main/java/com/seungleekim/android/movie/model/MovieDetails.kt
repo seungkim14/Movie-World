@@ -32,10 +32,7 @@ data class MovieDetails(
         return "Rate: $rating"
     }
 
-    fun getBackdropUrl(): String {
-        val backdropUrl = "http://image.tmdb.org/t/p/w780$backdropPath"
-        return backdropUrl
-    }
+    fun getBackdropUrl() = "http://image.tmdb.org/t/p/w780$backdropPath"
 
     fun getFirstGenre(): String {
         return getGenreById(genreIds[0])
@@ -64,7 +61,7 @@ data class MovieDetails(
             9648 -> "Mystery"
             10749 -> "Romance"
             878 -> "Science Fiction"
-            10770 -> "TV TrendingMovie"
+            10770 -> "TV Movie"
             53 -> "Thriller"
             10752 -> "War"
             37 -> "Western"

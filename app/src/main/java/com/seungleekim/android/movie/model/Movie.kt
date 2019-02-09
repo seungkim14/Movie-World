@@ -1,18 +1,23 @@
 package com.seungleekim.android.movie.model
 
 import android.os.Parcelable
+import androidx.annotation.NonNull
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+@Entity
 @Parcelize
-data class TrendingMovie(
-    @SerializedName("id")
+data class Movie(
+    @PrimaryKey @NonNull @SerializedName("id")
     val id: Int,
     @SerializedName("title")
     val title: String,
-    @SerializedName("poster_path")
+    @ColumnInfo(name = "last_name") @SerializedName("poster_path")
     val posterPath: String,
-    @SerializedName("release_date")
+    @ColumnInfo(name = "release_date") @SerializedName("release_date")
     val releaseDate: String
 ) : Parcelable {
 

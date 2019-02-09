@@ -1,15 +1,15 @@
 package com.seungleekim.android.movie.ui.trending
 
-import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.network.response.MoviesResponse
 import com.seungleekim.android.movie.ui.BaseContract
 
 interface TrendingMoviesContract {
 
     interface View : BaseContract.View<Presenter> {
-        fun showTrendingMovies(trendingMovies: List<TrendingMovie>?)
+        fun showTrendingMovies(movies: List<Movie>?)
         fun showFailureMessage()
-        fun showMovieDetail(trendingMovie: TrendingMovie)
+        fun showMovieDetail(movie: Movie)
     }
 
     interface Presenter : BaseContract.Presenter<View> {

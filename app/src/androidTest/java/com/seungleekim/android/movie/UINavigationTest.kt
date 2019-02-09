@@ -19,29 +19,29 @@ class UINavigationTest {
 
     @Rule
     @JvmField
-    val mainActivityTestRule = ActivityTestRule<MovieActivity>(MovieActivity::class.java)
+    val movieActivityTestRule = ActivityTestRule<MovieActivity>(MovieActivity::class.java)
 
     @Test
     fun bottomNavigation_clickTrendingMovies_opensTrendingMoviesScreen() {
-        // Click trending trendingMovies tab
+        // Click trending movies tab
         onView(withId(R.id.bottom_navigation_trending)).perform(click())
-        // Check that trending trendingMovies fragment was opened
+        // Check that trending movies fragment was opened
         onView(withId(R.id.fragment_container_trending)).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_clickSearch_opensSearchMoviesScreen() {
-        // Click search trendingMovies tab
+        // Click search movies tab
         onView(withId(R.id.bottom_navigation_search)).perform(click())
-        // Check that search trendingMovies fragment was opened
+        // Check that search movies fragment was opened
         onView(withId(R.id.fragment_container_search)).check(matches(isDisplayed()))
     }
 
     @Test
     fun bottomNavigation_clickFavorites_opensFavoriteMoviesScreen() {
-        // Click favorite trendingMovies tab
+        // Click favorite movies tab
         onView(withId(R.id.bottom_navigation_favorites)).perform(click())
-        // Check that favorite trendingMovies fragment was opened
+        // Check that favorite movies fragment was opened
         onView(withId(R.id.fragment_container_favorites)).check(matches(isDisplayed()))
     }
 }

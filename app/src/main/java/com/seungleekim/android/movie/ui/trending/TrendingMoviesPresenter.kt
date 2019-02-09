@@ -4,33 +4,32 @@ import com.seungleekim.android.movie.di.ActivityScoped
 import com.seungleekim.android.movie.network.TmdbApi
 import com.seungleekim.android.movie.network.response.MoviesResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 @ActivityScoped
 class TrendingMoviesPresenter @Inject constructor(
-    private val tmdbApi: TmdbApi
+    private val mTmdbApi: TmdbApi
 ) : TrendingMoviesContract.Presenter {
 
     private var mView: TrendingMoviesContract.View? = null
-    private var mGetMoviesDisposable: Disposable? = null
+    private val mDisposables = CompositeDisposable()
 
     override fun loadTrendingMovies() {
-        mGetMoviesDisposable = tmdbApi.getTrendingMovies()
+        mDisposables.add(mTmdbApi.getTrendingMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { response -> onGetMoviesSuccess(response) },
-                { e -> onGetMoviesFailure(e) }
-            )
+            .subscribe(this::onGetMoviesSuccess, this::onGetMoviesFailure))
     }
 
     override fun onGetMoviesSuccess(response: MoviesResponse?) {
-        mView?.showTrendingMovies(response?.trendingMovies)
+        mView?.showTrendingMovies(response?.movies)
     }
 
     override fun onGetMoviesFailure(e: Throwable?) {
+        Timber.d(e)
         mView?.showFailureMessage()
     }
 
@@ -40,6 +39,6 @@ class TrendingMoviesPresenter @Inject constructor(
 
     override fun dropView() {
         mView = null
-        mGetMoviesDisposable?.dispose()
+        mDisposables.clear()
     }
 }

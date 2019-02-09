@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.di.ActivityScoped
-import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.ui.MovieDetailsActivity
 import com.seungleekim.android.movie.util.NetworkUtils
 import dagger.android.support.DaggerFragment
@@ -21,7 +21,7 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
     TrendingMoviesAdapter.OnClickListener {
 
     @Inject
-    lateinit var networkUtils: NetworkUtils
+    lateinit var mNetworkUtils: NetworkUtils
 
     @Inject
     lateinit var mPresenter: TrendingMoviesContract.Presenter
@@ -48,12 +48,12 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
         rv_trending_movies.adapter = TrendingMoviesAdapter(this)
     }
 
-    override fun showTrendingMovies(trendingMovies: List<TrendingMovie>?) {
-        (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(trendingMovies)
+    override fun showTrendingMovies(movies: List<Movie>?) {
+        (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(movies)
     }
 
     override fun showFailureMessage() {
-        val errorMessage = when (networkUtils.hasNetworkConnection()) {
+        val errorMessage = when (mNetworkUtils.hasNetworkConnection()) {
             true -> getString(R.string.cannot_load_trending_movies_check_network_connection)
             false -> getString(R.string.cannot_load_trending_movies)
         }
@@ -61,13 +61,13 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
         Snackbar.make(rv_trending_movies, errorMessage, Snackbar.LENGTH_INDEFINITE).show()
     }
 
-    override fun showMovieDetail(trendingMovie: TrendingMovie) {
-        val intent = MovieDetailsActivity.newIntent(context, trendingMovie)
+    override fun showMovieDetail(movie: Movie) {
+        val intent = MovieDetailsActivity.newIntent(context, movie)
         startActivity(intent)
     }
 
-    override fun onMovieClicked(trendingMovie: TrendingMovie) {
-        showMovieDetail(trendingMovie)
+    override fun onMovieClicked(movie: Movie) {
+        showMovieDetail(movie)
     }
 
     companion object {

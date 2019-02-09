@@ -21,9 +21,9 @@ class MovieWorldApplication : DaggerApplication() {
 
     private fun setupLibraries() {
         setupLeakCanary()
-        setupCrashlytics()
+//        setupCrashytics()
         setupTimber()
-        setupCalligraphy()
+//        setupCalligraphy()
     }
 
     private fun setupLeakCanary() {
@@ -49,7 +49,7 @@ class MovieWorldApplication : DaggerApplication() {
         ViewPump.init(ViewPump.builder()
                 .addInterceptor(CalligraphyInterceptor(
                         CalligraphyConfig.Builder()
-                            .setDefaultFontPath(getString(R.string.default_font_path))
+                            .setDefaultFontPath("@font/raleway_medium.ttf")
                             .setFontAttrId(R.attr.fontPath)
                             .build()
                     )

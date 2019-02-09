@@ -48,5 +48,7 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/colorPrimaryLight</item>
     </style>
-
+    <style name="Widget.Movie.FloatingActionButton.Favorite" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/fab_background_favorite</item>
+    </style>
 </resources>

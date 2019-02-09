@@ -62,4 +62,29 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_movie_details_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_favorite_empty"
+        app:tint="@color/colorAccent"
+        app:backgroundTint="@color/fab_background_favorite"
+        app:elevation="5dp"
+        app:pressedTranslationZ="10dp"
+        app:rippleColor="@color/colorAccent"/>
+    <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/favorite"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:layout_margin="16dp"-->
+            <!--android:src="@drawable/ic_favorite_border_white_24dp"-->
+            <!--app:elevation="6dp"-->
+            <!--app:layout_anchor="@id/scrolling_container"-->
+            <!--app:layout_anchorGravity="bottom|right|end"-->
+            <!--app:pressedTranslationZ="12dp"-->
+            <!--app:rippleColor="@android:color/white"/>-->
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

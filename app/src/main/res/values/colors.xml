@@ -16,4 +16,7 @@
     <color name="bottomNavigationTabActive">#FFFFFF</color>
     <!-- color for inactive bottom navigation tab -->
     <color name="bottomNavigationTabInactive">#424242</color>
+    <!-- color for favorite floating action button background -->
+    <color name="fab_background_favorite">#FF0266</color>
+    <color name="fab_favorite_full">#E53935</color>
 </resources>

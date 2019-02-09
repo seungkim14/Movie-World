@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.seungleekim.android.movie.util.GlideApp
 import com.seungleekim.android.movie.R
-import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.model.Movie
 import kotlinx.android.synthetic.main.vh_trending_movie.view.*
 
 class TrendingMoviesAdapter(
     val onClickListener: OnClickListener
-) : ListAdapter<TrendingMovie, TrendingMoviesAdapter.TrendingMoviesViewHolder>(
+) : ListAdapter<Movie, TrendingMoviesAdapter.TrendingMoviesViewHolder>(
     TrendingMoviesDiffCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingMoviesViewHolder {
@@ -26,26 +26,26 @@ class TrendingMoviesAdapter(
     }
 
     inner class TrendingMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(trendingMovie: TrendingMovie, position: Int) = with(itemView) {
-            GlideApp.with(context).load(trendingMovie.getPosterUrl()).into(iv_trending_movie_poster)
+        fun bind(movie: Movie, position: Int) = with(itemView) {
+            GlideApp.with(context).load(movie.getPosterUrl()).into(iv_trending_movie_poster)
             setOnClickListener {
-                onClickListener.onMovieClicked(trendingMovie)
+                onClickListener.onMovieClicked(movie)
             }
         }
     }
 
-    class TrendingMoviesDiffCallback : DiffUtil.ItemCallback<TrendingMovie>() {
-        override fun areItemsTheSame(oldTrendingMovie: TrendingMovie, newTrendingMovie: TrendingMovie): Boolean {
-            return oldTrendingMovie.id == newTrendingMovie.id
+    class TrendingMoviesDiffCallback : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldMovie: Movie, newMovie: Movie): Boolean {
+            return oldMovie.id == newMovie.id
         }
 
-        override fun areContentsTheSame(oldTrendingMovie: TrendingMovie, newTrendingMovie: TrendingMovie): Boolean {
-            return oldTrendingMovie.title == newTrendingMovie.title
-                    && oldTrendingMovie.releaseDate == newTrendingMovie.releaseDate
+        override fun areContentsTheSame(oldMovie: Movie, newMovie: Movie): Boolean {
+            return oldMovie.title == newMovie.title
+                    && oldMovie.releaseDate == newMovie.releaseDate
         }
     }
 
     interface OnClickListener {
-        fun onMovieClicked(trendingMovie: TrendingMovie)
+        fun onMovieClicked(movie: Movie)
     }
 }

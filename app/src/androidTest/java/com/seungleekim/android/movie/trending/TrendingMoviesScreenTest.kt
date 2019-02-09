@@ -13,7 +13,7 @@ import androidx.test.rule.ActivityTestRule
 import com.seungleekim.android.movie.CustomMatchers.Companion.hasDrawable
 import com.seungleekim.android.movie.CustomMatchers.Companion.withIndex
 import com.seungleekim.android.movie.R
-import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.ui.MovieActivity
 import com.seungleekim.android.movie.ui.trending.TrendingMoviesFragment
 import org.hamcrest.CoreMatchers.allOf
@@ -31,16 +31,16 @@ class TrendingMoviesScreenTest {
     val mainActivityTestRule = ActivityTestRule<MovieActivity>(MovieActivity::class.java)
 
     // Too lazy to make mock product flavor...
-    val FAKE_TRENDING_Trending_MOVIES: MutableList<TrendingMovie> = mutableListOf()
+    val FAKE_TRENDING_MOVIES: MutableList<Movie> = mutableListOf()
 
     @Before
     fun populateFakeMoviesIntoUi() {
-        // Populate trending trendingMovies screen with fake trendingMovies
+        // Populate trending movies screen with fake movies
         for (i in 1..5) {
-            FAKE_TRENDING_Trending_MOVIES.add(TrendingMovie(i, "title{$i}", "file:///android_asset/test-image.png", "releaseDate{$i}"))
+            FAKE_TRENDING_MOVIES.add(Movie(i, "title{$i}", "file:///android_asset/test-image.png", "releaseDate{$i}"))
         }
         ((mainActivityTestRule.activity as MovieActivity).supportFragmentManager.findFragmentByTag(MovieActivity.TAG_TRENDING_FRAGMENT)
-                as TrendingMoviesFragment).showTrendingMovies(FAKE_TRENDING_Trending_MOVIES)
+                as TrendingMoviesFragment).showTrendingMovies(FAKE_TRENDING_MOVIES)
     }
 
 

@@ -1,7 +1,7 @@
 package com.seungleekim.android.movie.ui.trending
 
 import com.seungleekim.android.movie.RxSchedulerOverrideRule
-import com.seungleekim.android.movie.model.TrendingMovie
+import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.network.TmdbApi
 import com.seungleekim.android.movie.network.response.MoviesResponse
 import org.junit.Before
@@ -35,9 +35,9 @@ class TrendingMoviesPresenterTest {
 
         // Create moviesResponse
         moviesResponse = MoviesResponse()
-        moviesResponse.trendingMovies = listOf(
-            TrendingMovie(1, "firstTitle", "firstPosterPath", "firstReleaseDate"),
-            TrendingMovie(2, "secondTitle", "secondPosterPath", "secondReleaseDate")
+        moviesResponse.movies = listOf(
+            Movie(1, "firstTitle", "firstPosterPath", "firstReleaseDate"),
+            Movie(2, "secondTitle", "secondPosterPath", "secondReleaseDate")
         )
 
         mTrendingMoviesPresenter = TrendingMoviesPresenter(tmdbApi)
@@ -47,7 +47,7 @@ class TrendingMoviesPresenterTest {
     @Test
     fun onGetMovieSuccess_ShowTrendingMovies() {
         mTrendingMoviesPresenter.onGetMoviesSuccess(moviesResponse)
-        verify(mTrendingMoviesView).showTrendingMovies(moviesResponse.trendingMovies)
+        verify(mTrendingMoviesView).showTrendingMovies(moviesResponse.movies)
     }
 
     @Test
