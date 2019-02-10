@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie.ui.details
+package com.seungleekim.android.movie.ui.details.trailer
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,19 +13,19 @@ import kotlinx.android.synthetic.main.vh_movie_trailer.view.*
 
 class MovieTrailersAdapter(
     val onClickListener: OnClickListener
-) : ListAdapter<Trailer, MovieTrailersAdapter.TrendingMoviesViewHolder>(
+) : ListAdapter<Trailer, MovieTrailersAdapter.MovieTrailerViewHolder>(
     MovieTrailersDiffCallback()
 ) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingMoviesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieTrailerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.vh_movie_trailer, parent, false)
-        return TrendingMoviesViewHolder(view)
+        return MovieTrailerViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: TrendingMoviesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieTrailerViewHolder, position: Int) {
         holder.bind(getItem(position), position)
     }
 
-    inner class TrendingMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MovieTrailerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(trailer: Trailer, position: Int) = with(itemView) {
             tv_movie_details_trailer.text = trailer.name
             GlideApp.with(context).load(trailer.getThumbnailUrl()).into(iv_movie_details_trailer)

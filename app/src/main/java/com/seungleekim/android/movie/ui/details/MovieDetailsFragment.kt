@@ -1,5 +1,6 @@
 package com.seungleekim.android.movie.ui.details
 
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
@@ -10,10 +11,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.di.ActivityScoped
 import com.seungleekim.android.movie.model.*
 import com.seungleekim.android.movie.ui.MovieDetailsActivity
+import com.seungleekim.android.movie.ui.details.review.MovieReviewsAdapter
+import com.seungleekim.android.movie.ui.details.review.ReviewDialogFragment
+import com.seungleekim.android.movie.ui.details.trailer.MovieTrailersAdapter
 import com.seungleekim.android.movie.util.GlideApp
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -24,7 +29,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetailsContract.View,
-    MovieTrailersAdapter.OnClickListener {
+    MovieTrailersAdapter.OnClickListener, MovieReviewsAdapter.OnClickListener {
 
     @Inject
     lateinit var mPresenter: MovieDetailsContract.Presenter
@@ -43,11 +48,16 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        startLoadingAnimation()
         mPresenter.takeView(this)
         mPresenter.getMovieDetails(mMovie!!)
         mPresenter.getFavorite(mMovie!!)
         setupToolbar()
         setupFavoriteFab()
+    }
+
+    private fun startLoadingAnimation() {
+        lav_movie_details_loading.playAnimation()
     }
 
     private fun setupToolbar() {
@@ -81,7 +91,9 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         showMovieOverview(movieDetails.overview)
         showMovieCasts(movieDetails.getCastsString())
         showMovieCrews(movieDetails.getCrewsString())
-        showMovieReviews(movieDetails.getReviewsString())
+        showMovieReviews(movieDetails.reviews)
+        hideView(container_movie_details_loading)
+        showView(container_movie_details)
     }
 
     override fun showMovieTitle(title: String) {
@@ -114,12 +126,34 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         tv_movie_details_release_date.text = releaseDate
     }
 
-    override fun showFavorite(b: Boolean) {
+    override fun showFavorite(setFavorite: Boolean, showAnimation: Boolean) {
+        if (setFavorite) {
+            if (showAnimation) {
+                showView(lav_favorited)
+                lav_favorited.playAnimation()
+                lav_favorited.addAnimatorListener(object: Animator.AnimatorListener {
+                    override fun onAnimationRepeat(animation: Animator?) {
+                    }
 
-        if (b) {
-            fab_movie_details_favorite.setImageResource(R.drawable.ic_favorite_full)
+                    override fun onAnimationEnd(animation: Animator?) {
+                        hideView(lav_favorited)
+                    }
+
+                    override fun onAnimationCancel(animation: Animator?) {
+                    }
+
+                    override fun onAnimationStart(animation: Animator?) {
+                    }
+
+                })
+            }
+            Snackbar.make(container_movie_details, "Added ${mMovie!!.title} to favorite movies",
+                Snackbar.LENGTH_SHORT).show()
+            fab_movie_details_favorite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_favorite_full))
         } else {
-            fab_movie_details_favorite.setImageResource(R.drawable.ic_favorite_empty)
+            Snackbar.make(container_movie_details, "Removed ${mMovie!!.title} from favorite movies",
+                Snackbar.LENGTH_SHORT).show()
+            fab_movie_details_favorite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_favorite_empty))
         }
     }
 
@@ -163,28 +197,28 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         tv_movie_details_featured_crews_content.text = crews
     }
 
-    override fun showMovieReviews(reviews: String?) {
-        if (reviews == null) {
+    override fun showMovieReviews(reviews: List<Review>) {
+        if (reviews.isEmpty()) {
             return
         }
         showView(container_movie_details_reviews)
-        tv_movie_details_featured_reviews_content.text = reviews
+        rv_movie_details_reviews.setHasFixedSize(true)
+        rv_movie_details_reviews.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rv_movie_details_reviews.adapter = MovieReviewsAdapter(this)
+        (rv_movie_details_reviews.adapter as MovieReviewsAdapter).submitList(reviews)
+    }
+
+    override fun onReviewClick(review: Review) {
+        val dialog = ReviewDialogFragment.newInstance(review)
+        dialog.show(activity?.supportFragmentManager!!, "review_dialog")
     }
 
     override fun showFailureMessage() {
         Toast.makeText(context, "DB Transaction Failed", Toast.LENGTH_LONG).show()
     }
 
-    private fun showView(v: View?) {
-        v?.visibility = View.VISIBLE
-    }
-
-    private fun hideView(v: View?) {
-        v?.visibility = View.GONE
-    }
-
     companion object {
-        private const val ARG_MOVIE = "mMovie"
+        private const val ARG_MOVIE = "movie"
 
         fun newInstance(movie: Movie): MovieDetailsFragment {
             val fragment = MovieDetailsFragment()

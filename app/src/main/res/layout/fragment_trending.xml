@@ -26,10 +26,43 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_trending_movies_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lav_trending_movies_loading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/movie_loading"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_trending_movies_loading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:src="@drawable/ic_trending" />
+
+        <TextView
+            android:id="@+id/tv_trending_movies_loading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/loading_trending_movies"
+            android:textAlignment="center"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/lav_trending_movies_loading"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/lav_trending_movies_loading"
+            app:layout_constraintEnd_toEndOf="@id/lav_trending_movies_loading" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_trending_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

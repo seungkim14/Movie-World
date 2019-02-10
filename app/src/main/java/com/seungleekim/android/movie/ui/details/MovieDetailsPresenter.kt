@@ -5,12 +5,9 @@ import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.model.MovieDetails
 import com.seungleekim.android.movie.network.TmdbApi
 import com.seungleekim.android.movie.persistence.FavoriteMoviesStore
-import io.reactivex.MaybeObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.internal.operators.maybe.MaybeObserveOn
 import io.reactivex.observers.DisposableMaybeObserver
-import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -43,7 +40,10 @@ class MovieDetailsPresenter @Inject constructor(
         mDisposables.add(mFavoriteMoviesStore.getFavoriteMovieById(movie.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe( { setFavorite(true) }, { e -> showFailureMessage(e) })
+            .subscribe(
+                { setFavorite(setFavorite = true) },
+                { e -> showFailureMessage(e) }
+            )
         )
     }
 
@@ -71,7 +71,10 @@ class MovieDetailsPresenter @Inject constructor(
         mDisposables.add(mFavoriteMoviesStore.insertFavoriteMovie(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe( { setFavorite(true) }, { e -> showFailureMessage(e) })
+            .subscribe(
+                { setFavorite(setFavorite = true, showAnimation = true) },
+                { e -> showFailureMessage(e) }
+            )
         )
     }
 
@@ -79,7 +82,7 @@ class MovieDetailsPresenter @Inject constructor(
         mDisposables.add(mFavoriteMoviesStore.deleteFavoriteMovie(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe( { setFavorite(false) }, { e -> showFailureMessage(e) })
+            .subscribe( { setFavorite(setFavorite = false) }, { e -> showFailureMessage(e) })
         )
     }
 
@@ -88,8 +91,8 @@ class MovieDetailsPresenter @Inject constructor(
         mView?.showFailureMessage()
     }
 
-    override fun setFavorite(b: Boolean) {
-        mView?.showFavorite(b)
+    override fun setFavorite(setFavorite: Boolean, showAnimation: Boolean) {
+        mView?.showFavorite(setFavorite, showAnimation)
     }
 
     override fun takeView(view: MovieDetailsContract.View) {

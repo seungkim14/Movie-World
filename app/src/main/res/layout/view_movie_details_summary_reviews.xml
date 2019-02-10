@@ -122,14 +122,12 @@
             android:text="@string/reviews"
             android:textSize="22sp" />
 
-        <TextView
-            android:id="@+id/tv_movie_details_featured_reviews_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textSize="14sp"
-            tools:text="@string/very_long_text" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_movie_details_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
 
     </LinearLayout>
 

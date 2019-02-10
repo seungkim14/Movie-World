@@ -25,4 +25,6 @@
     <string name="watch_trailers_on_youtube">Watch Trailers on YouTube</string>
     <string name="trailer">Trailer</string>
     <string name="casts">Casts</string>
+    <string name="loading_trending_movies">Loading Trending Movies...</string>
+    <string name="loading_movie_details">Loading Movie Details</string>
 </resources>

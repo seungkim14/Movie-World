@@ -8,7 +8,4 @@ data class Review (
     val id: String,
     val author: String,
     val content: String
-) : Parcelable {
-
-    override fun toString() = "Review by $author:\n\n$content"
-}
+) : Parcelable

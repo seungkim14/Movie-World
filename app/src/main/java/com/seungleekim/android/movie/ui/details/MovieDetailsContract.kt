@@ -14,19 +14,19 @@ interface MovieDetailsContract {
         fun showMovieDuration(runtime: String)
         fun showMovieGenres(genres: String)
         fun showMovieReleaseDate(releaseDate: String)
-        fun showFavorite(b: Boolean)
+        fun showFavorite(setFavorite: Boolean, showAnimation: Boolean)
         fun showMovieTrailers(trailers: List<Trailer>)
         fun showMovieOverview(overview: String?)
         fun showMovieCasts(casts: String?)
         fun showMovieCrews(crews: String?)
-        fun showMovieReviews(reviews: String?)
+        fun showMovieReviews(reviews: List<Review>)
         fun showFailureMessage()
     }
 
     interface Presenter : BaseContract.Presenter<View> {
         fun getMovieDetails(movie: Movie)
         fun getFavorite(movie: Movie)
-        fun setFavorite(b: Boolean)
+        fun setFavorite(setFavorite: Boolean, showAnimation: Boolean = false)
         fun insertFavoriteMovie(movie: Movie)
         fun deleteFavoriteMovie(movie: Movie)
         fun onFavoriteFabClick(movie: Movie)

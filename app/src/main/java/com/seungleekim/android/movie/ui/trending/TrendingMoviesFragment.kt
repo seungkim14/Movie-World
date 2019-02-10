@@ -12,7 +12,7 @@ import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.ui.MovieDetailsActivity
 import com.seungleekim.android.movie.util.NetworkUtils
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_trending.rv_trending_movies
+import kotlinx.android.synthetic.main.fragment_trending.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,7 +32,8 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
+        setupRecyclerView()
+        startLoadingAnimation()
         mPresenter.takeView(this)
         mPresenter.loadTrendingMovies()
     }
@@ -42,7 +43,11 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
         mPresenter.dropView()
     }
 
-    private fun initRecyclerView() {
+    private fun startLoadingAnimation() {
+        lav_trending_movies_loading.playAnimation()
+    }
+
+    private fun setupRecyclerView() {
         rv_trending_movies.setHasFixedSize(true)
         rv_trending_movies.layoutManager = GridLayoutManager(context, 2)
         rv_trending_movies.adapter = TrendingMoviesAdapter(this)
@@ -50,6 +55,8 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
 
     override fun showTrendingMovies(movies: List<Movie>?) {
         (rv_trending_movies.adapter as TrendingMoviesAdapter).submitList(movies)
+        hideView(container_trending_movies_loading)
+        showView(rv_trending_movies)
     }
 
     override fun showFailureMessage() {
