@@ -24,7 +24,7 @@ data class MovieDetails(
         return "$title (${getYear()})"
     }
 
-    private fun getYear(): String{
+    private fun getYear(): String {
         return releaseDate.split("-")[0]
     }
 
@@ -75,7 +75,7 @@ data class MovieDetails(
 
     fun getReviewsString() = listToString(reviews)
 
-    private fun listToString(list: List<Any>) : String? {
+    private fun listToString(list: List<Any>): String? {
         if (list.isEmpty()) {
             return null
         }

@@ -1,15 +1,20 @@
 package com.seungleekim.android.movie.network
-
-import com.google.gson.*
-import com.seungleekim.android.movie.model.*
+import com.google.gson.JsonArray
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.seungleekim.android.movie.model.Cast
+import com.seungleekim.android.movie.model.Crew
+import com.seungleekim.android.movie.model.MovieDetails
+import com.seungleekim.android.movie.model.Review
+import com.seungleekim.android.movie.model.Trailer
 import java.lang.reflect.Type
 
 class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
 
-    override fun deserialize(json: JsonElement?,
-                             typeOfT: Type?,
-                             context: JsonDeserializationContext?): MovieDetails? {
-        val rootJsonObject : JsonObject = json?.asJsonObject ?: return null
+    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): MovieDetails? {
+        val rootJsonObject = json?.asJsonObject ?: return null
 
         val id = getId(rootJsonObject)
         val backdropPath = getBackdropPath(rootJsonObject)
@@ -129,7 +134,7 @@ class MovieDetailsDeserializer : JsonDeserializer<MovieDetails> {
         return crews
     }
 
-    private fun getCasts(rootJsonObject: JsonObject) : List<Cast> {
+    private fun getCasts(rootJsonObject: JsonObject): List<Cast> {
         val casts = mutableListOf<Cast>()
         val creditsJsonObject = rootJsonObject.get("credits").asJsonObject
         val castsJsonArray = creditsJsonObject.get("cast").asJsonArray

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Cast (
+class Cast(
     val id: Int,
     val order: Int,
     val name: String,
@@ -12,5 +12,4 @@ class Cast (
 ) : Parcelable {
 
     override fun toString() = "$name ($character)"
-
 }

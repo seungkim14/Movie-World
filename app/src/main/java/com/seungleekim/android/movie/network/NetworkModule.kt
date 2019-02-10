@@ -32,7 +32,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGson() : Gson {
+    fun provideGson(): Gson {
         return GsonBuilder()
             .registerTypeAdapter(MovieDetails::class.java,
                 MovieDetailsDeserializer()

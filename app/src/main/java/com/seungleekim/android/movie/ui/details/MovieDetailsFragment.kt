@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.di.ActivityScoped
-import com.seungleekim.android.movie.model.*
+import com.seungleekim.android.movie.model.Movie
+import com.seungleekim.android.movie.model.MovieDetails
+import com.seungleekim.android.movie.model.Review
+import com.seungleekim.android.movie.model.Trailer
 import com.seungleekim.android.movie.ui.MovieDetailsActivity
 import com.seungleekim.android.movie.ui.details.review.MovieReviewsAdapter
 import com.seungleekim.android.movie.ui.details.review.ReviewDialogFragment
@@ -126,12 +129,12 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         tv_movie_details_release_date.text = releaseDate
     }
 
-    override fun showFavorite(setFavorite: Boolean, showAnimation: Boolean) {
+    override fun showFavorite(setFavorite: Boolean, buttonClicked: Boolean) {
         if (setFavorite) {
-            if (showAnimation) {
+            if (buttonClicked) {
                 showView(lav_favorited)
                 lav_favorited.playAnimation()
-                lav_favorited.addAnimatorListener(object: Animator.AnimatorListener {
+                lav_favorited.addAnimatorListener(object : Animator.AnimatorListener {
                     override fun onAnimationRepeat(animation: Animator?) {
                     }
 
@@ -144,15 +147,16 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
 
                     override fun onAnimationStart(animation: Animator?) {
                     }
-
                 })
+                Snackbar.make(container_movie_details, "Added ${mMovie!!.title} to favorite movies",
+                    Snackbar.LENGTH_SHORT).show()
             }
-            Snackbar.make(container_movie_details, "Added ${mMovie!!.title} to favorite movies",
-                Snackbar.LENGTH_SHORT).show()
             fab_movie_details_favorite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_favorite_full))
         } else {
-            Snackbar.make(container_movie_details, "Removed ${mMovie!!.title} from favorite movies",
-                Snackbar.LENGTH_SHORT).show()
+            if (buttonClicked) {
+                Snackbar.make(container_movie_details, "Removed ${mMovie!!.title} from favorite movies",
+                    Snackbar.LENGTH_SHORT).show()
+            }
             fab_movie_details_favorite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_favorite_empty))
         }
     }
@@ -187,8 +191,8 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         }
         showView(container_movie_details_casts)
         tv_movie_details_casts_content.text = casts
-
     }
+
     override fun showMovieCrews(crews: String?) {
         if (crews == null) {
             return

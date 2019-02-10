@@ -4,7 +4,7 @@ import com.seungleekim.android.movie.di.ActivityScoped
 import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.model.MovieDetails
 import com.seungleekim.android.movie.network.TmdbApi
-import com.seungleekim.android.movie.persistence.FavoriteMoviesStore
+import com.seungleekim.android.movie.persistence.FavoriteMoviesDao
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableMaybeObserver
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @ActivityScoped
 class MovieDetailsPresenter @Inject constructor(
     private val mTmdbApi: TmdbApi,
-    private val mFavoriteMoviesStore: FavoriteMoviesStore
+    private val mFavoriteMoviesDao: FavoriteMoviesDao
 ) : MovieDetailsContract.Presenter {
 
     private var mView: MovieDetailsContract.View? = null
@@ -37,7 +37,7 @@ class MovieDetailsPresenter @Inject constructor(
     }
 
     override fun getFavorite(movie: Movie) {
-        mDisposables.add(mFavoriteMoviesStore.getFavoriteMovieById(movie.id)
+        mDisposables.add(mFavoriteMoviesDao.getFavoriteMovieById(movie.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -48,10 +48,10 @@ class MovieDetailsPresenter @Inject constructor(
     }
 
     override fun onFavoriteFabClick(movie: Movie) {
-        mDisposables.add(mFavoriteMoviesStore.getFavoriteMovieById(movie.id)
+        mDisposables.add(mFavoriteMoviesDao.getFavoriteMovieById(movie.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object: DisposableMaybeObserver<Movie>() {
+            .subscribeWith(object : DisposableMaybeObserver<Movie>() {
                 override fun onSuccess(movie: Movie) {
                     Timber.d("Deleted Favorite Movie ${movie.title}")
                     deleteFavoriteMovie(movie)
@@ -68,21 +68,21 @@ class MovieDetailsPresenter @Inject constructor(
     }
 
     override fun insertFavoriteMovie(movie: Movie) {
-        mDisposables.add(mFavoriteMoviesStore.insertFavoriteMovie(movie)
+        mDisposables.add(mFavoriteMoviesDao.insertFavoriteMovie(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { setFavorite(setFavorite = true, showAnimation = true) },
+                { setFavorite(setFavorite = true, buttonClicked = true) },
                 { e -> showFailureMessage(e) }
             )
         )
     }
 
     override fun deleteFavoriteMovie(movie: Movie) {
-        mDisposables.add(mFavoriteMoviesStore.deleteFavoriteMovie(movie)
+        mDisposables.add(mFavoriteMoviesDao.deleteFavoriteMovie(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe( { setFavorite(setFavorite = false) }, { e -> showFailureMessage(e) })
+            .subscribe({ setFavorite(setFavorite = false) }, { e -> showFailureMessage(e) })
         )
     }
 
@@ -91,8 +91,8 @@ class MovieDetailsPresenter @Inject constructor(
         mView?.showFailureMessage()
     }
 
-    override fun setFavorite(setFavorite: Boolean, showAnimation: Boolean) {
-        mView?.showFavorite(setFavorite, showAnimation)
+    override fun setFavorite(setFavorite: Boolean, buttonClicked: Boolean) {
+        mView?.showFavorite(setFavorite, buttonClicked)
     }
 
     override fun takeView(view: MovieDetailsContract.View) {

@@ -6,7 +6,8 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -42,7 +43,6 @@ class TrendingMoviesScreenTest {
         ((mainActivityTestRule.activity as MovieActivity).supportFragmentManager.findFragmentByTag(MovieActivity.TAG_TRENDING_FRAGMENT)
                 as TrendingMoviesFragment).showTrendingMovies(FAKE_TRENDING_MOVIES)
     }
-
 
     @Test
     fun trendingMovies_DisplayedInUi() {

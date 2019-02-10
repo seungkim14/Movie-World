@@ -8,5 +8,4 @@ import com.seungleekim.android.movie.model.Movie
 abstract class FavoriteMoviesDatabase : RoomDatabase() {
 
     abstract fun favoriteMoviesDao(): FavoriteMoviesDao
-
 }

@@ -20,10 +20,4 @@ class PersistenceModule {
     fun provideFavoriteMoviesDao(favoriteMoviesDatabase: FavoriteMoviesDatabase): FavoriteMoviesDao {
         return favoriteMoviesDatabase.favoriteMoviesDao()
     }
-
-    @Provides
-    @Singleton
-    fun provideFavoriteMoviesStore(favoriteMoviesDao: FavoriteMoviesDao): FavoriteMoviesStore {
-        return FavoriteMoviesStore(favoriteMoviesDao)
-    }
 }

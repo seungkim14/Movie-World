@@ -5,12 +5,10 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.seungleekim.android.movie.model.Movie
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Single
 
 @Dao
 interface FavoriteMoviesDao {
@@ -32,5 +30,4 @@ interface FavoriteMoviesDao {
 
     @Query("SELECT * FROM movie")
     fun getFavoriteMovies(): Flowable<List<Movie>>
-
 }
