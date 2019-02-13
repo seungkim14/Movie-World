@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie
+package com.seungleekim.android.movie.ui
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -8,7 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.seungleekim.android.movie.ui.MovieActivity
+import com.seungleekim.android.movie.R
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

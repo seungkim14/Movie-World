@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie
+package com.seungleekim.android.movie.ui
 
 import android.view.View
 import android.widget.ImageView

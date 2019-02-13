@@ -10,20 +10,8 @@ interface MovieDetailsContract {
 
     interface View : BaseContract.View<Presenter> {
         fun showMovieDetails(movieDetails: MovieDetails)
-        fun showMovieTitle(title: String)
-        fun showMovieBackdrop(backdropUrl: String)
-        fun showMovieRating(rating: String)
-        fun showMovieMpaaRating(mpaaRating: String?)
-        fun showMovieDuration(runtime: String)
-        fun showMovieGenres(genres: String)
-        fun showMovieReleaseDate(releaseDate: String)
         fun showFavorite(setFavorite: Boolean, buttonClicked: Boolean)
-        fun showMovieTrailers(trailers: List<Trailer>)
-        fun showMovieOverview(overview: String?)
-        fun showMovieCasts(casts: String?)
-        fun showMovieCrews(crews: String?)
-        fun showMovieReviews(reviews: List<Review>)
-        fun showFailureMessage()
+        fun showFailureMessage(message: String)
     }
 
     interface Presenter : BaseContract.Presenter<View> {

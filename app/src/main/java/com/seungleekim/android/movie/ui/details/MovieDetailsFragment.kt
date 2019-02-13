@@ -99,33 +99,33 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         showView(container_movie_details)
     }
 
-    override fun showMovieTitle(title: String) {
+    private fun showMovieTitle(title: String) {
         collapsing_toolbar.title = title
         tv_movie_details_title.text = title
     }
 
-    override fun showMovieBackdrop(backdropUrl: String) {
+    private fun showMovieBackdrop(backdropUrl: String) {
         GlideApp.with(context!!).load(backdropUrl).into(iv_details_movie_backdrop)
     }
 
-    override fun showMovieRating(rating: String) {
+    private fun showMovieRating(rating: String) {
         tv_movie_details_rating.text = rating
     }
 
-    override fun showMovieMpaaRating(mpaaRating: String?) {
+    private fun showMovieMpaaRating(mpaaRating: String?) {
         tv_movie_details_mpaa_rating.text = mpaaRating
     }
 
     @SuppressLint("SetTextI18n")
-    override fun showMovieDuration(runtime: String) {
+    private fun showMovieDuration(runtime: String) {
         tv_movie_details_runtime.text = runtime
     }
 
-    override fun showMovieGenres(genres: String) {
+    private fun showMovieGenres(genres: String) {
         tv_movie_details_genres.text = genres
     }
 
-    override fun showMovieReleaseDate(releaseDate: String) {
+    private fun showMovieReleaseDate(releaseDate: String) {
         tv_movie_details_release_date.text = releaseDate
     }
 
@@ -161,7 +161,7 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         }
     }
 
-    override fun showMovieTrailers(trailers: List<Trailer>) {
+    private fun showMovieTrailers(trailers: List<Trailer>) {
         if (trailers.isEmpty()) {
             return
         }
@@ -177,7 +177,7 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         startActivity(intent)
     }
 
-    override fun showMovieOverview(overview: String?) {
+    private fun showMovieOverview(overview: String?) {
         if (overview == null) {
             return
         }
@@ -185,7 +185,7 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         tv_movie_details_overview_content.text = overview
     }
 
-    override fun showMovieCasts(casts: String?) {
+    private fun showMovieCasts(casts: String?) {
         if (casts == null) {
             return
         }
@@ -193,7 +193,7 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         tv_movie_details_casts_content.text = casts
     }
 
-    override fun showMovieCrews(crews: String?) {
+    private fun showMovieCrews(crews: String?) {
         if (crews == null) {
             return
         }
@@ -201,7 +201,7 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         tv_movie_details_featured_crews_content.text = crews
     }
 
-    override fun showMovieReviews(reviews: List<Review>) {
+    private fun showMovieReviews(reviews: List<Review>) {
         if (reviews.isEmpty()) {
             return
         }
@@ -217,8 +217,8 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         dialog.show(activity?.supportFragmentManager!!, "review_dialog")
     }
 
-    override fun showFailureMessage() {
-        Toast.makeText(context, "DB Transaction Failed", Toast.LENGTH_LONG).show()
+    override fun showFailureMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     companion object {

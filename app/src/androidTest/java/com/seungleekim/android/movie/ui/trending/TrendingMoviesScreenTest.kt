@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie.trending
+package com.seungleekim.android.movie.ui.trending
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
@@ -11,12 +11,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.seungleekim.android.movie.CustomMatchers.Companion.hasDrawable
-import com.seungleekim.android.movie.CustomMatchers.Companion.withIndex
+import com.seungleekim.android.movie.ui.CustomMatchers.Companion.hasDrawable
+import com.seungleekim.android.movie.ui.CustomMatchers.Companion.withIndex
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.ui.MovieActivity
-import com.seungleekim.android.movie.ui.trending.TrendingMoviesFragment
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.Before
 import org.junit.Rule

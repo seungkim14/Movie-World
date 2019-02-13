@@ -9,6 +9,7 @@ buildscript {
         appCompatVersion = '1.1.0-alpha02'
         calligraphyVersion = '3.0.0'
         constraintLayoutVersion = '1.1.3'
+        coreTestingVersion = '2.0.0'
         crashlyticsVersion = '2.9.9'
         daggerVersion = '2.20'
         espressoVersion = '3.1.1'
@@ -22,8 +23,8 @@ buildscript {
         lifecycleVersion = '2.1.0-alpha02'
         lottieVersion = '3.0.0-beta1'
         materialVersion = '1.1.0-alpha03'
-        mockitoVersion = '2.0.2-beta'
-        powerMockVersion = '1.6.6'
+        mockitoVersion = '2.24.0'
+        powerMockVersion = '2.0.0'
         retrofitVersion = '2.5.0'
         roomVersion = '2.1.0-alpha04'
         rxAndroidVersion = '2.1.0'
@@ -42,7 +43,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "io.fabric.tools:gradle:$fabricVersion"
     }

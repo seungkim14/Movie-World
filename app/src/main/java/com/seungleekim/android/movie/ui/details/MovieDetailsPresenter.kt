@@ -25,15 +25,15 @@ class MovieDetailsPresenter @Inject constructor(
         mDisposables.add(mTmdbApi.getMovieDetail(movie.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::onGetMovieDetailsSuccess, this::onGetMovieDetailsFailure))
+            .subscribe(
+                { movieDetails -> onGetMovieDetailsSuccess(movieDetails)},
+                { e -> showFailureMessage(e, "Failed to get movie details") }
+            )
+        )
     }
 
     private fun onGetMovieDetailsSuccess(movieDetails: MovieDetails) {
         mView?.showMovieDetails(movieDetails)
-    }
-
-    private fun onGetMovieDetailsFailure(e: Throwable?) {
-        Timber.d(e, "onGetMovieDetailsFailure()")
     }
 
     override fun getFavorite(movie: Movie) {
@@ -42,7 +42,7 @@ class MovieDetailsPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { setFavorite(setFavorite = true) },
-                { e -> showFailureMessage(e) }
+                { e -> showFailureMessage(e, "Failed to search local database") }
             )
         )
     }
@@ -73,7 +73,7 @@ class MovieDetailsPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { setFavorite(setFavorite = true, buttonClicked = true) },
-                { e -> showFailureMessage(e) }
+                { e -> showFailureMessage(e, "Failed to insert favorite movie") }
             )
         )
     }
@@ -82,13 +82,15 @@ class MovieDetailsPresenter @Inject constructor(
         mDisposables.add(mFavoriteMoviesDao.deleteFavoriteMovie(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ setFavorite(setFavorite = false) }, { e -> showFailureMessage(e) })
+            .subscribe({ setFavorite(setFavorite = false) },
+                { e -> showFailureMessage(e, "Failed to delete favorite movie") }
+            )
         )
     }
 
-    private fun showFailureMessage(e: Throwable) {
+    private fun showFailureMessage(e: Throwable, message: String) {
         Timber.d(e, "showFaliureMessage()")
-        mView?.showFailureMessage()
+        mView?.showFailureMessage(message)
     }
 
     override fun setFavorite(setFavorite: Boolean, buttonClicked: Boolean) {
