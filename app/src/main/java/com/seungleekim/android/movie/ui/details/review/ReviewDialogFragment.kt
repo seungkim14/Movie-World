@@ -11,11 +11,11 @@ import kotlinx.android.synthetic.main.fragment_dialog_review.*
 
 class ReviewDialogFragment : DialogFragment() {
 
-    private var mReview: Review? = null
+    private lateinit var review: Review
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mReview = arguments?.getParcelable(ARG_REVIEW)
+        review = requireNotNull(arguments?.getParcelable(ARG_REVIEW))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -24,8 +24,8 @@ class ReviewDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog?.setTitle("Review by ${mReview?.author}")
-        tv_review_content.text = mReview?.content
+        dialog?.setTitle("Review by ${review.author}")
+        tv_review_content.text = review.content
     }
 
     companion object {

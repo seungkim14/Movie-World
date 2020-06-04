@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.seungleekim.android.movie.util.GlideApp
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.model.Movie
+import com.seungleekim.android.movie.model.getPosterUrl
 import kotlinx.android.synthetic.main.vh_trending_movie.view.*
 
 class TrendingMoviesAdapter(
@@ -17,7 +18,8 @@ class TrendingMoviesAdapter(
     TrendingMoviesDiffCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingMoviesViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.vh_trending_movie, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.vh_trending_movie, parent, false)
         return TrendingMoviesViewHolder(view)
     }
 
@@ -35,6 +37,7 @@ class TrendingMoviesAdapter(
     }
 
     class TrendingMoviesDiffCallback : DiffUtil.ItemCallback<Movie>() {
+
         override fun areItemsTheSame(oldMovie: Movie, newMovie: Movie): Boolean {
             return oldMovie.id == newMovie.id
         }

@@ -3,9 +3,10 @@ package com.seungleekim.android.movie.network
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class TmdbApiKeyInterceptor : Interceptor {
+// yolo
+private const val API_KEY = "9d09208e1c09792a5dae8a6c6a749a28"
 
-    private val API_KEY = "9d09208e1c09792a5dae8a6c6a749a28"
+class TmdbApiKeyInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()

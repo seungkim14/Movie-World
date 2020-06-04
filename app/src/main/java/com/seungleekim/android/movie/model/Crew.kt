@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Crew(
+data class Crew(
     val id: Int,
     val name: String,
     val department: String,

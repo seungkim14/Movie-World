@@ -8,7 +8,7 @@ import com.seungleekim.android.movie.model.MovieDetails
 import com.seungleekim.android.movie.model.Review
 import com.seungleekim.android.movie.model.Trailer
 import com.seungleekim.android.movie.network.TmdbApi
-import com.seungleekim.android.movie.persistence.FavoriteMoviesDao
+import com.seungleekim.android.movie.room.FavoriteMoviesDao
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -32,15 +32,15 @@ class MovieDetailsPresenterTest {
     }
 
     @Mock
-    private lateinit var mTmdbApi: TmdbApi
+    private lateinit var tmdbApi: TmdbApi
 
     @Mock
-    private lateinit var mMovieDetailsView: MovieDetailsContract.View
+    private lateinit var view: MovieDetailsContract.View
 
     @Mock
-    private lateinit var mFavoriteMoviesDao: FavoriteMoviesDao
+    private lateinit var favoriteMoviesDao: FavoriteMoviesDao
 
-    private lateinit var mMovieDetailsPresenter: MovieDetailsPresenter
+    private lateinit var movieDetailsPresenter: MovieDetailsPresenter
 
     private val MOVIE = Movie(1, "title1", "posterPath1", "releaseDate1")
     private val MOVIE_DETAILS = MovieDetails(
@@ -62,72 +62,72 @@ class MovieDetailsPresenterTest {
     @Before
     fun setupMovieDetailsPresenter() {
         MockitoAnnotations.initMocks(this)
-        mMovieDetailsPresenter = MovieDetailsPresenter(mTmdbApi, mFavoriteMoviesDao)
-        mMovieDetailsPresenter.takeView(mMovieDetailsView)
+        movieDetailsPresenter = MovieDetailsPresenter(tmdbApi, favoriteMoviesDao)
+        movieDetailsPresenter.takeView(view)
     }
 
     @Test
     fun onGetMovieDetailsSuccess_showMovieDetails() {
-        whenever(mTmdbApi.getMovieDetail(MOVIE.id)).thenReturn(Single.just(MOVIE_DETAILS))
-        mMovieDetailsPresenter.getMovieDetails(MOVIE)
+        whenever(tmdbApi.getMovieDetail(MOVIE.id)).thenReturn(Single.just(MOVIE_DETAILS))
+        movieDetailsPresenter.getMovieDetails(MOVIE)
 
-        verify(mMovieDetailsView).showMovieDetails(MOVIE_DETAILS)
+        verify(view).showMovieDetails(MOVIE_DETAILS)
     }
 
     @Test
     fun onGetMovieDetailsFailure_showFailureMessage() {
-        whenever(mTmdbApi.getMovieDetail(MOVIE.id)).thenReturn(Single.error(Exception()))
-        mMovieDetailsPresenter.getMovieDetails(MOVIE)
+        whenever(tmdbApi.getMovieDetail(MOVIE.id)).thenReturn(Single.error(Exception()))
+        movieDetailsPresenter.getMovieDetails(MOVIE)
 
-        verify(mMovieDetailsView).showFailureMessage(anyString())
+        verify(view).showFailureMessage(anyString())
     }
 
     @Test
     fun onGetFavoriteSuccess_showFavorite() {
-        whenever(mFavoriteMoviesDao.getFavoriteMovieById(MOVIE.id)).thenReturn(Maybe.just(MOVIE))
-        mMovieDetailsPresenter.getFavorite(MOVIE)
+        whenever(favoriteMoviesDao.getFavoriteMovieById(MOVIE.id)).thenReturn(Maybe.just(MOVIE))
+        movieDetailsPresenter.getFavorite(MOVIE)
 
-        verify(mMovieDetailsView).showFavorite(anyBoolean(), anyBoolean())
+        verify(view).showFavorite(anyBoolean(), anyBoolean())
     }
 
     @Test
     fun onGetFavoriteFailure_showFailureMessage() {
-        whenever(mFavoriteMoviesDao.getFavoriteMovieById(anyInt())).thenReturn(Maybe.error(Exception()))
-        mMovieDetailsPresenter.getFavorite(MOVIE)
+        whenever(favoriteMoviesDao.getFavoriteMovieById(anyInt())).thenReturn(Maybe.error(Exception()))
+        movieDetailsPresenter.getFavorite(MOVIE)
 
-        verify(mMovieDetailsView).showFailureMessage(anyString())
+        verify(view).showFailureMessage(anyString())
     }
 
     @Test
     fun onInsertFavoriteMovieSuccess_showFavorite() {
-        whenever(mFavoriteMoviesDao.insertFavoriteMovie(MOVIE)).thenReturn(Completable.complete())
-        mMovieDetailsPresenter.insertFavoriteMovie(MOVIE)
+        whenever(favoriteMoviesDao.insertFavoriteMovie(MOVIE)).thenReturn(Completable.complete())
+        movieDetailsPresenter.insertFavoriteMovie(MOVIE)
 
-        verify(mMovieDetailsView).showFavorite(anyBoolean(), anyBoolean())
+        verify(view).showFavorite(anyBoolean(), anyBoolean())
     }
 
     @Test
     fun onInsertFavoriteMovieFailure_showFailureMessage() {
-        whenever(mFavoriteMoviesDao.insertFavoriteMovie(MOVIE)).thenReturn(Completable.error(Exception()))
-        mMovieDetailsPresenter.insertFavoriteMovie(MOVIE)
+        whenever(favoriteMoviesDao.insertFavoriteMovie(MOVIE)).thenReturn(Completable.error(Exception()))
+        movieDetailsPresenter.insertFavoriteMovie(MOVIE)
 
-        verify(mMovieDetailsView).showFailureMessage(anyString())
+        verify(view).showFailureMessage(anyString())
     }
 
     @Test
     fun onDeleteFavoriteMovieSuccess_showFavorite() {
-        whenever(mFavoriteMoviesDao.deleteFavoriteMovie(MOVIE)).thenReturn(Completable.complete())
-        mMovieDetailsPresenter.deleteFavoriteMovie(MOVIE)
+        whenever(favoriteMoviesDao.deleteFavoriteMovie(MOVIE)).thenReturn(Completable.complete())
+        movieDetailsPresenter.deleteFavoriteMovie(MOVIE)
 
-        verify(mMovieDetailsView).showFavorite(anyBoolean(), anyBoolean())
+        verify(view).showFavorite(anyBoolean(), anyBoolean())
     }
 
     @Test
     fun onDeleteFavoriteMovieFailure_showFailureMessage() {
-        whenever(mFavoriteMoviesDao.deleteFavoriteMovie(MOVIE)).thenReturn(Completable.error(Exception()))
-        mMovieDetailsPresenter.deleteFavoriteMovie(MOVIE)
+        whenever(favoriteMoviesDao.deleteFavoriteMovie(MOVIE)).thenReturn(Completable.error(Exception()))
+        movieDetailsPresenter.deleteFavoriteMovie(MOVIE)
 
-        verify(mMovieDetailsView).showFailureMessage(anyString())
+        verify(view).showFailureMessage(anyString())
     }
 
 }

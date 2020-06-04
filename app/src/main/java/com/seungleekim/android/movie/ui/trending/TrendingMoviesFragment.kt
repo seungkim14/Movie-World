@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.seungleekim.android.movie.R
-import com.seungleekim.android.movie.di.ActivityScoped
+import com.seungleekim.android.movie.dagger.ActivityScoped
 import com.seungleekim.android.movie.model.Movie
 import com.seungleekim.android.movie.ui.MovieDetailsActivity
 import com.seungleekim.android.movie.util.NetworkUtils
@@ -21,12 +21,16 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
     TrendingMoviesAdapter.OnClickListener {
 
     @Inject
-    lateinit var mNetworkUtils: NetworkUtils
+    lateinit var networkUtils: NetworkUtils
 
     @Inject
-    lateinit var mPresenter: TrendingMoviesContract.Presenter
+    lateinit var presenter: TrendingMoviesContract.Presenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_trending, container, false)
     }
 
@@ -34,13 +38,13 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         startLoadingAnimation()
-        mPresenter.takeView(this)
-        mPresenter.loadTrendingMovies()
+        presenter.takeView(this)
+        presenter.loadTrendingMovies()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter.dropView()
+        presenter.dropView()
     }
 
     private fun startLoadingAnimation() {
@@ -60,7 +64,7 @@ class TrendingMoviesFragment @Inject constructor() : DaggerFragment(), TrendingM
     }
 
     override fun showFailureMessage() {
-        val errorMessage = when (mNetworkUtils.hasNetworkConnection()) {
+        val errorMessage = when (networkUtils.hasNetworkConnection()) {
             true -> getString(R.string.cannot_load_trending_movies_check_network_connection)
             false -> getString(R.string.cannot_load_trending_movies)
         }

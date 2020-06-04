@@ -23,7 +23,7 @@ class MovieActivity : DaggerAppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase!!))
+        super.attachBaseContext(newBase?.let { ViewPumpContextWrapper.wrap(it) })
     }
 
     private fun initFragmentByTag(tag: String) {

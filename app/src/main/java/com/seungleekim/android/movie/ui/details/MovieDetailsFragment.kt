@@ -13,11 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.seungleekim.android.movie.R
-import com.seungleekim.android.movie.di.ActivityScoped
-import com.seungleekim.android.movie.model.Movie
-import com.seungleekim.android.movie.model.MovieDetails
-import com.seungleekim.android.movie.model.Review
-import com.seungleekim.android.movie.model.Trailer
+import com.seungleekim.android.movie.dagger.ActivityScoped
+import com.seungleekim.android.movie.model.*
 import com.seungleekim.android.movie.ui.MovieDetailsActivity
 import com.seungleekim.android.movie.ui.details.review.MovieReviewsAdapter
 import com.seungleekim.android.movie.ui.details.review.ReviewDialogFragment
@@ -35,26 +32,30 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
     MovieTrailersAdapter.OnClickListener, MovieReviewsAdapter.OnClickListener {
 
     @Inject
-    lateinit var mPresenter: MovieDetailsContract.Presenter
+    lateinit var presenter: MovieDetailsContract.Presenter
 
-    private var mMovie: Movie? = null
-    private var mMovieDetails: MovieDetails? = null
+    private lateinit var movie: Movie
+    private lateinit var movieDetails: MovieDetails
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mMovie = arguments?.getParcelable(ARG_MOVIE)
+        movie = requireNotNull(arguments?.getParcelable(ARG_MOVIE))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_details, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startLoadingAnimation()
-        mPresenter.takeView(this)
-        mPresenter.getMovieDetails(mMovie!!)
-        mPresenter.getFavorite(mMovie!!)
+        presenter.takeView(this)
+        presenter.getMovieDetails(movie)
+        presenter.getFavorite(movie)
         setupToolbar()
         setupFavoriteFab()
     }
@@ -72,17 +73,17 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
 
     private fun setupFavoriteFab() {
         fab_movie_details_favorite.setOnClickListener {
-            mPresenter.onFavoriteFabClick(mMovie!!)
+            presenter.onFavoriteFabClick(movie)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter.dropView()
+        presenter.dropView()
     }
 
     override fun showMovieDetails(movieDetails: MovieDetails) {
-        mMovieDetails = movieDetails
+        this.movieDetails = movieDetails
         showMovieTitle(movieDetails.getTitleWithYear())
         showMovieBackdrop(movieDetails.getBackdropUrl())
         showMovieRating(movieDetails.getRatingText())
@@ -105,7 +106,7 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
     }
 
     private fun showMovieBackdrop(backdropUrl: String) {
-        GlideApp.with(context!!).load(backdropUrl).into(iv_details_movie_backdrop)
+        GlideApp.with(requireContext()).load(backdropUrl).into(iv_details_movie_backdrop)
     }
 
     private fun showMovieRating(rating: String) {
@@ -148,16 +149,30 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
                     override fun onAnimationStart(animation: Animator?) {
                     }
                 })
-                Snackbar.make(container_movie_details, "Added ${mMovie!!.title} to favorite movies",
-                    Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    container_movie_details, "Added ${movie.title} to favorite movies",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
-            fab_movie_details_favorite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_favorite_full))
+            fab_movie_details_favorite.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_favorite_full
+                )
+            )
         } else {
             if (buttonClicked) {
-                Snackbar.make(container_movie_details, "Removed ${mMovie!!.title} from favorite movies",
-                    Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    container_movie_details, "Removed ${movie.title} from favorite movies",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
-            fab_movie_details_favorite.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_favorite_empty))
+            fab_movie_details_favorite.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_favorite_empty
+                )
+            )
         }
     }
 
@@ -167,7 +182,8 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         }
         showView(container_view_movie_details_trailers)
         rv_movie_details_trailers.setHasFixedSize(true)
-        rv_movie_details_trailers.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rv_movie_details_trailers.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rv_movie_details_trailers.adapter = MovieTrailersAdapter(this)
         (rv_movie_details_trailers.adapter as MovieTrailersAdapter).submitList(trailers)
     }
@@ -207,14 +223,15 @@ class MovieDetailsFragment @Inject constructor() : DaggerFragment(), MovieDetail
         }
         showView(container_movie_details_reviews)
         rv_movie_details_reviews.setHasFixedSize(true)
-        rv_movie_details_reviews.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rv_movie_details_reviews.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rv_movie_details_reviews.adapter = MovieReviewsAdapter(this)
         (rv_movie_details_reviews.adapter as MovieReviewsAdapter).submitList(reviews)
     }
 
     override fun onReviewClick(review: Review) {
         val dialog = ReviewDialogFragment.newInstance(review)
-        dialog.show(activity?.supportFragmentManager!!, "review_dialog")
+        activity?.supportFragmentManager?.let { dialog.show(it, "review_dialog") }
     }
 
     override fun showFailureMessage(message: String) {

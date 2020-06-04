@@ -1,8 +1,8 @@
-package com.seungleekim.android.movie.di
+package com.seungleekim.android.movie.dagger
 
 import com.seungleekim.android.movie.MovieWorldApplication
 import com.seungleekim.android.movie.network.NetworkModule
-import com.seungleekim.android.movie.persistence.PersistenceModule
+import com.seungleekim.android.movie.room.PersistenceModule
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule

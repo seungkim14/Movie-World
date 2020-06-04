@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie.persistence
+package com.seungleekim.android.movie.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

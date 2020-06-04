@@ -1,6 +1,6 @@
 package com.seungleekim.android.movie.ui.trending
 
-import com.seungleekim.android.movie.di.ActivityScoped
+import com.seungleekim.android.movie.dagger.ActivityScoped
 import com.seungleekim.android.movie.network.TmdbApi
 import com.seungleekim.android.movie.network.response.MoviesResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,34 +11,34 @@ import javax.inject.Inject
 
 @ActivityScoped
 class TrendingMoviesPresenter @Inject constructor(
-    private val mTmdbApi: TmdbApi
+    private val tmdbApi: TmdbApi
 ) : TrendingMoviesContract.Presenter {
 
-    private var mView: TrendingMoviesContract.View? = null
-    private val mDisposables = CompositeDisposable()
+    private var view: TrendingMoviesContract.View? = null
+    private val disposables = CompositeDisposable()
 
     override fun loadTrendingMovies() {
-        mDisposables.add(mTmdbApi.getTrendingMovies()
+        disposables.add(tmdbApi.getTrendingMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::onGetMoviesSuccess, this::onGetMoviesFailure))
     }
 
     override fun onGetMoviesSuccess(response: MoviesResponse?) {
-        mView?.showTrendingMovies(response?.movies)
+        view?.showTrendingMovies(response?.movies)
     }
 
     override fun onGetMoviesFailure(e: Throwable?) {
         Timber.d(e)
-        mView?.showFailureMessage()
+        view?.showFailureMessage()
     }
 
     override fun takeView(view: TrendingMoviesContract.View) {
-        mView = view
+        this.view = view
     }
 
     override fun dropView() {
-        mView = null
-        mDisposables.clear()
+        view = null
+        disposables.clear()
     }
 }

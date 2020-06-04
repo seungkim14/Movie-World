@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie.di
+package com.seungleekim.android.movie.dagger
 
 import javax.inject.Scope
 

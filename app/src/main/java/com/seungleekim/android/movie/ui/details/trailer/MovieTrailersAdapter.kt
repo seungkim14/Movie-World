@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.seungleekim.android.movie.R
 import com.seungleekim.android.movie.model.Trailer
+import com.seungleekim.android.movie.model.getThumbnailUrl
 import com.seungleekim.android.movie.util.GlideApp
 import kotlinx.android.synthetic.main.vh_movie_trailer.view.*
 

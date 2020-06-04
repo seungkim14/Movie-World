@@ -4,26 +4,25 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Trailer(
+data class Trailer(
     val id: String,
     val name: String,
     val key: String,
     val site: String
-) : Parcelable {
+) : Parcelable
 
-    fun getThumbnailUrl(): String {
-        return if (site.equals("Youtube", ignoreCase = true)) {
-            "https://img.youtube.com/vi/$key/0.jpg"
-        } else {
-            ""
-        }
+fun Trailer.getThumbnailUrl(): String {
+    return if (site.equals("Youtube", ignoreCase = true)) {
+        "https://img.youtube.com/vi/$key/0.jpg"
+    } else {
+        ""
     }
+}
 
-    fun getYoutubeUrl(): String {
-        return if (site.equals("Youtube", ignoreCase = true)) {
-            "http://www.youtube.com/watch?v=$key"
-        } else {
-            ""
-        }
+fun Trailer.getYoutubeUrl(): String {
+    return if (site.equals("Youtube", ignoreCase = true)) {
+        "http://www.youtube.com/watch?v=$key"
+    } else {
+        ""
     }
 }

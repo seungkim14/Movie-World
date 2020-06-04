@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Cast(
+data class Cast(
     val id: Int,
     val order: Int,
     val name: String,
