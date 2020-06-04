@@ -1,16 +1,12 @@
 package com.seungleekim.android.movie
 
-import com.crashlytics.android.Crashlytics
-import com.seungleekim.android.movie.di.DaggerAppComponent
-import com.seungleekim.android.movie.util.CrashlyticsTree
+import com.seungleekim.android.movie.dagger.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import io.fabric.sdk.android.Fabric
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
-import timber.log.Timber
 
 class MovieWorldApplication : DaggerApplication() {
 
@@ -21,9 +17,6 @@ class MovieWorldApplication : DaggerApplication() {
 
     private fun setupLibraries() {
         setupLeakCanary()
-//        setupCrashytics()
-        setupTimber()
-//        setupCalligraphy()
     }
 
     private fun setupLeakCanary() {
@@ -33,21 +26,11 @@ class MovieWorldApplication : DaggerApplication() {
         LeakCanary.install(this)
     }
 
-    private fun setupCrashlytics() {
-        Fabric.with(this, Crashlytics())
-    }
-
-    private fun setupTimber() {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        } else {
-            Timber.plant(CrashlyticsTree())
-        }
-    }
-
     private fun setupCalligraphy() {
-        ViewPump.init(ViewPump.builder()
-                .addInterceptor(CalligraphyInterceptor(
+        ViewPump.init(
+            ViewPump.builder()
+                .addInterceptor(
+                    CalligraphyInterceptor(
                         CalligraphyConfig.Builder()
                             .setDefaultFontPath("@font/raleway_medium.ttf")
                             .setFontAttrId(R.attr.fontPath)

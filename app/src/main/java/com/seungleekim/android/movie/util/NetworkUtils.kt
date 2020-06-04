@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import javax.inject.Inject
 
-class NetworkUtils @Inject constructor(val context: Context) {
+class NetworkUtils @Inject constructor(private val context: Context) {
 
     fun hasNetworkConnection(): Boolean {
         val connectivityManager =

@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie.persistence
+package com.seungleekim.android.movie.room
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
@@ -27,31 +27,31 @@ class FavoriteMoviesDatabaseTest {
         Movie(5, "title5", "posterPath5", "releaseDate5")
     )
 
-    private lateinit var mFavoriteMoviesDao: FavoriteMoviesDao
-    private lateinit var mFavoriteMoviesDatabase: FavoriteMoviesDatabase
+    private lateinit var favoriteMoviesDao: FavoriteMoviesDao
+    private lateinit var favoriteMoviesDatabase: FavoriteMoviesDatabase
 
     @Before
     fun createFavoriteMoviesDatabase() {
-        mFavoriteMoviesDatabase = Room.inMemoryDatabaseBuilder(
+        favoriteMoviesDatabase = Room.inMemoryDatabaseBuilder(
             InstrumentationRegistry.getInstrumentation().context,
             FavoriteMoviesDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        mFavoriteMoviesDao = mFavoriteMoviesDatabase.favoriteMoviesDao()
+        favoriteMoviesDao = favoriteMoviesDatabase.favoriteMoviesDao()
     }
 
     @After
     fun closeDb() {
-        mFavoriteMoviesDatabase.close()
+        favoriteMoviesDatabase.close()
     }
 
     @Test
     fun insertAndGetMovieByIdTest() {
         // Insert a movie
-        mFavoriteMoviesDao.insertFavoriteMovie(MOVIES[0]).blockingAwait()
+        favoriteMoviesDao.insertFavoriteMovie(MOVIES[0]).blockingAwait()
 
         // Get By Id
-        mFavoriteMoviesDao.getFavoriteMovieById(MOVIES[0].id)
+        favoriteMoviesDao.getFavoriteMovieById(MOVIES[0].id)
             .test()
             .assertValue(MOVIES[0])
     }
@@ -59,10 +59,10 @@ class FavoriteMoviesDatabaseTest {
     @Test
     fun insertAndGetMoviesTest() {
         // Insert movies
-        mFavoriteMoviesDao.insertFavoriteMovies(MOVIES).blockingAwait()
+        favoriteMoviesDao.insertFavoriteMovies(MOVIES).blockingAwait()
 
         // Get all of them
-        mFavoriteMoviesDao.getFavoriteMovies()
+        favoriteMoviesDao.getFavoriteMovies()
             .test()
             .assertValue(MOVIES)
     }
@@ -70,13 +70,13 @@ class FavoriteMoviesDatabaseTest {
     @Test
     fun deleteAndGetMovieTest() {
         // Insert
-        mFavoriteMoviesDao.insertFavoriteMovie(MOVIES[0]).blockingAwait()
+        favoriteMoviesDao.insertFavoriteMovie(MOVIES[0]).blockingAwait()
 
         // Delete
-        mFavoriteMoviesDao.deleteFavoriteMovie(MOVIES[0]).blockingAwait()
+        favoriteMoviesDao.deleteFavoriteMovie(MOVIES[0]).blockingAwait()
 
         // Check if it still exists
-        mFavoriteMoviesDao.getFavoriteMovieById(MOVIES[0].id)
+        favoriteMoviesDao.getFavoriteMovieById(MOVIES[0].id)
             .test()
             .assertNoValues()
     }
@@ -84,21 +84,21 @@ class FavoriteMoviesDatabaseTest {
     @Test
     fun deleteAndGetMoviesTest() {
         // Insert 5 movies
-        mFavoriteMoviesDao.insertFavoriteMovies(MOVIES).blockingAwait()
+        favoriteMoviesDao.insertFavoriteMovies(MOVIES).blockingAwait()
 
         // Delete only 2 of them
-        mFavoriteMoviesDao.deleteFavoriteMovies(listOf(MOVIES[0], MOVIES[3])).blockingAwait()
+        favoriteMoviesDao.deleteFavoriteMovies(listOf(MOVIES[0], MOVIES[3])).blockingAwait()
 
         // Check deletions
-        mFavoriteMoviesDao.getFavoriteMovieById(MOVIES[0].id)
+        favoriteMoviesDao.getFavoriteMovieById(MOVIES[0].id)
             .test()
             .assertNoValues()
-        mFavoriteMoviesDao.getFavoriteMovieById(MOVIES[3].id)
+        favoriteMoviesDao.getFavoriteMovieById(MOVIES[3].id)
             .test()
             .assertNoValues()
 
         // Check if other three movies still exist
-        mFavoriteMoviesDao.getFavoriteMovies()
+        favoriteMoviesDao.getFavoriteMovies()
             .test()
             .assertValue(object : Predicate<List<Movie>> {
                 override fun test(movies: List<Movie>): Boolean {

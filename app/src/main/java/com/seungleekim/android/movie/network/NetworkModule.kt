@@ -11,12 +11,14 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+private const val TMDB_BASE_URL = "http://api.themoviedb.org/"
+
 @Module
 class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBaseUrl() = "http://api.themoviedb.org/"
+    fun provideBaseUrl(): String = TMDB_BASE_URL
 
     @Provides
     @Singleton
@@ -25,20 +27,18 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(interceptor: TmdbApiKeyInterceptor): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
+        return OkHttpClient.Builder().addInterceptor(interceptor).build()
     }
 
     @Provides
     @Singleton
     fun provideGson(): Gson {
-        return GsonBuilder()
-            .registerTypeAdapter(MovieDetails::class.java,
-                MovieDetailsDeserializer()
-            )
-            .create()
+        return GsonBuilder().registerTypeAdapter(
+            MovieDetails::class.java,
+            MovieDetailsDeserializer()
+        ).create()
     }
+
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String, gson: Gson): Retrofit {

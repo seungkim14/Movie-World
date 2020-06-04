@@ -1,4 +1,4 @@
-package com.seungleekim.android.movie.persistence
+package com.seungleekim.android.movie.room
 
 import androidx.room.Dao
 import androidx.room.Delete

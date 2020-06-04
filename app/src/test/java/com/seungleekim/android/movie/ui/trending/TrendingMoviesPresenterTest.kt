@@ -25,9 +25,9 @@ class TrendingMoviesPresenterTest {
     private lateinit var tmdbApi: TmdbApi
 
     @Mock
-    private lateinit var mTrendingMoviesView: TrendingMoviesContract.View
+    private lateinit var view: TrendingMoviesContract.View
 
-    private lateinit var mTrendingMoviesPresenter: TrendingMoviesPresenter
+    private lateinit var trendingMoviesPresenter: TrendingMoviesPresenter
 
     @Before
     fun setupTrendingMoviesPresenter() {
@@ -40,19 +40,19 @@ class TrendingMoviesPresenterTest {
             Movie(2, "secondTitle", "secondPosterPath", "secondReleaseDate")
         )
 
-        mTrendingMoviesPresenter = TrendingMoviesPresenter(tmdbApi)
-        mTrendingMoviesPresenter.takeView(mTrendingMoviesView)
+        trendingMoviesPresenter = TrendingMoviesPresenter(tmdbApi)
+        trendingMoviesPresenter.takeView(view)
     }
 
     @Test
     fun onGetMovieSuccess_ShowTrendingMovies() {
-        mTrendingMoviesPresenter.onGetMoviesSuccess(moviesResponse)
-        verify(mTrendingMoviesView).showTrendingMovies(moviesResponse.movies)
+        trendingMoviesPresenter.onGetMoviesSuccess(moviesResponse)
+        verify(view).showTrendingMovies(moviesResponse.movies)
     }
 
     @Test
     fun onGetMovieFailure_ShowFailureMessage() {
-        mTrendingMoviesPresenter.onGetMoviesFailure(Exception())
-        verify(mTrendingMoviesView).showFailureMessage()
+        trendingMoviesPresenter.onGetMoviesFailure(Exception())
+        verify(view).showFailureMessage()
     }
 }
